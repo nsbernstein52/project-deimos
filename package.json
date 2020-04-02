@@ -1,0 +1,22 @@
+{
+  "name": "project-deimos",
+  "version": "1.0.0",
+  "description": "SDC-Overview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martianMethods/project-deimos.git"
+  },
+  "author": "nsb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martianMethods/project-deimos/issues"
+  },
+  "homepage": "https://github.com/martianMethods/project-deimos#readme",
+  "dependencies": {
+    "pg": "^8.0.0"
+  }
+}
