@@ -1,9 +1,11 @@
 DROP DATABASE IF EXISTS productsdb;
-CREATE DATABASE productsDB;
+CREATE DATABASE productsdb;
 \c productsdb;
 
+
+
 CREATE TABLE products (
-  id SERIAL PRIMARY KEY
+  id SERIAL PRIMARY KEY,
   name TEXT,
   slogan TEXT,
   description TEXT,
@@ -12,7 +14,7 @@ CREATE TABLE products (
 );
 
 CREATE TABLE styles (
-  id SERIAL PRIMARY KEY
+  id SERIAL PRIMARY KEY,
   product_id INT REFERENCES products(id),
   name TEXT,
   sale_price INT,
@@ -21,22 +23,22 @@ CREATE TABLE styles (
 );
 
 CREATE TABLE photos (
-  id SERIAL PRIMARY KEY
-  style_id INT REFERENCES products(styles),
+  id SERIAL PRIMARY KEY,
+  style_id INT REFERENCES styles(id),
   url TEXT
 );
 
 CREATE TABLE skus (
-  id SERIAL PRIMARY KEY
-  style_id INT REFERENCES products(styles),
+  id SERIAL PRIMARY KEY,
+  style_id INT REFERENCES styles(id),
   size TEXT,
-  quantity Intl
+  quantity INT
 );
 
 CREATE TABLE features (
-  id SERIAL PRIMARY KEY
+  id SERIAL PRIMARY KEY,
   product_id INT REFERENCES products(id),
   feature TEXT,
-  value NUMBER
+  value INT
 );
 
