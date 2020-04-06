@@ -25,7 +25,8 @@ CREATE TABLE styles (
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
   style_id INT REFERENCES styles(id),
-  url TEXT
+  url TEXT,
+  thumbnail_url TEXT
 );
 
 CREATE TABLE skus (
@@ -39,6 +40,6 @@ CREATE TABLE features (
   id SERIAL PRIMARY KEY,
   product_id INT REFERENCES products(id),
   feature TEXT,
-  value INT
+  value TEXT
 );
 
