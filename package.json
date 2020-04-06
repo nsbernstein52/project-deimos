@@ -18,5 +18,6 @@
   "homepage": "https://github.com/martianMethods/project-deimos#readme",
   "dependencies": {
     "pg": "^8.0.0"
-  }
+  },
+  "devDependencies": {}
 }
