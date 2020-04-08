@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS productsdb;
-CREATE DATABASE productsdb;
+// DROP DATABASE IF EXISTS productsdb;
+// CREATE DATABASE productsdb;
 \c productsdb;
 
 
