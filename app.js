@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
-const pg = require("./query.js");
+const pg = require("./pg/query.js");
+
+// const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 app.use(express.json());
 
@@ -17,9 +20,8 @@ app.get('/productsdb/:id', (req, res) => {
   .catch(err => console.log(err));
 });
 
-const PORT = process.env.PORT || 3000;
-
 console.log("a.js: LEAVING");
+
 app.listen(PORT, () => {
   console.log(`Web server running on: http://localhost:${PORT}`);
 });
