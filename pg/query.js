@@ -26,9 +26,22 @@ const getProduct = (id) => {
   })
 };
 
+const getStyles = (product_id) => {
+  let values = [product_id];
+  console.log("q: gS: product_id ENTERED", product_id);
+  return pool.query("SELECT * FROM styles where product_id = $1", values)
+  .then(res => {
+    console.log("q: gS r.r[0]:", res.rows[0]);
+    // return res.rows[0];
+    return res.rows;
+  })
+};
+
+
 console.log("q.js: LEAVING");
 
 module.exports = {
-  getProduct
+  getProduct,
+  getStyles
 }
 
