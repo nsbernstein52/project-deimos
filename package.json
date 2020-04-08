@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/martianMethods/project-deimos#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "pg": "^8.0.0"
   },
   "devDependencies": {}
