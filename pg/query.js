@@ -4,7 +4,7 @@ const pool = new Pool({
   database: 'productsdb',
   password: 'Psa2020s',
   port: 5432,
-})
+});
 
 console.log( new Date());
 console.log("q.js: ENTERING");
@@ -12,7 +12,7 @@ console.log("q.js: ENTERING");
 pool.query('SELECT NOW()', (err, res) => {
   console.log(err, res)
   pool.end()
-})
+});
 
 const getProduct = (id) => {
   let values = [id];
@@ -26,7 +26,7 @@ const getProduct = (id) => {
 
 console.log("q.js: LEAVING");
 
-module exports = {
+module.exports = {
   getProduct
 }
 
