@@ -1,18 +1,19 @@
-const { Pool, Client } = require('pg')
+// const { Pool, Client } = require('pg')
+const { Pool } = require('pg')
 const pool = new Pool({
-  user: 'postgres',
+  user: 'nsb52',
   database: 'productsdb',
   password: 'Psa2020s',
-  port: 5432,
+  port: 5432 // GOOD?  BAD?
 });
 
 console.log( new Date());
 console.log("q.js: ENTERING");
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-});
+// pool.query('SELECT NOW()', (err, res) => {
+//   console.log(err, res)
+//   pool.end()
+// });
 
 const getProduct = (id) => {
   let values = [id];
@@ -20,7 +21,8 @@ const getProduct = (id) => {
   return pool.query("SELECT * FROM products where id = $1", values)
   .then(res => {
     console.log("q: gP r.r[0]:", res.rows[0]);
-    return res.rows[0];
+    // return res.rows[0];
+    return res.rows;
   })
 };
 
