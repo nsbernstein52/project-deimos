@@ -63,12 +63,38 @@ const getStyles = (product_id) => {
   })
 };
 
+//getSkus for a style_id
+const getSkus = (style_id) => {
+  let values = [style_id];
+  console.log("q: gSks: style_id ENTERED", style_id);
+  return pool.query("SELECT * FROM skus where style_id = $1", values)
+  .then(res => {
+    console.log("q: gSks r.rs:", res.rows);
+    // return res.rows[0];
+    return res.rows;
+  })
+};
+
+//getPhotos for a style_id
+const getPhotos = (style_id) => {
+  let values = [style_id];
+  console.log("q: gPhs: style_id ENTERED", style_id);
+  return pool.query("SELECT * FROM photos where style_id = $1", values)
+  .then(res => {
+    console.log("q: gPhs r.rs:", res.rows);
+    // return res.rows[0];
+    return res.rows;
+  })
+};
+
 console.log("q.js: LEAVING");
 
 module.exports = {
   getAllProducts,
   getProduct,
   getFeatures,
-  getStyles
+  getStyles,
+  getSkus,
+  getPhotos
 }
 

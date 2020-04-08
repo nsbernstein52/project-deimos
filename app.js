@@ -48,7 +48,29 @@ app.get('/productsdb/styles/:id', (req, res) => {
   console.log("a.js: gSs: ENTERED");
   pg.getStyles(req.params.id)
   .then((results) => {
-    console.log("a.js gS: r.r.[0]: COMPLETED", results);
+    console.log("a.js gSs: r.rs: COMPLETED", results);
+    res.send(results);
+  })
+  .catch(err => console.log(err));
+});
+
+// getSkus for a style_id
+app.get('/productsdb/skus/:id', (req, res) => {
+  console.log("a.js: gSks: ENTERED");
+  pg.getSkus(req.params.id)
+  .then((results) => {
+    console.log("a.js gSks: r.rs: COMPLETED", results);
+    res.send(results);
+  })
+  .catch(err => console.log(err));
+});
+
+// getPhotos for a style_id
+app.get('/productsdb/photos/:id', (req, res) => {
+  console.log("a.js: gPhs: ENTERED");
+  pg.getPhotos(req.params.id)
+  .then((results) => {
+    console.log("a.js gPhs: r.rs: COMPLETED", results);
     res.send(results);
   })
   .catch(err => console.log(err));
