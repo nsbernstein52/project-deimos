@@ -15,6 +15,19 @@ console.log("q.js: ENTERING");
 //   pool.end()
 // });
 
+// getAllProducts
+const getAllProducts = () => {
+  // let values = [];
+  console.log("q: gP: id ENTERED");
+  return pool.query("SELECT * FROM products")
+  .then(res => {
+    console.log("q: gAPs r.r[3]:", res.rows[3]);
+    // return res.rows[0];
+    return res.rows;
+  })
+};
+
+// getProduct
 const getProduct = (id) => {
   let values = [id];
   console.log("q: gP: id ENTERED", id);
@@ -26,22 +39,36 @@ const getProduct = (id) => {
   })
 };
 
-const getStyles = (product_id) => {
+//getFeatures for a product_id
+const getFeatures = (product_id) => {
   let values = [product_id];
-  console.log("q: gS: product_id ENTERED", product_id);
-  return pool.query("SELECT * FROM styles where product_id = $1", values)
+  console.log("q: gFs: product_id ENTERED", product_id);
+  return pool.query("SELECT * FROM features where product_id = $1", values)
   .then(res => {
-    console.log("q: gS r.r[0]:", res.rows[0]);
+    console.log("q: gS r.rs:", res.rows);
     // return res.rows[0];
     return res.rows;
   })
 };
 
+//getStyles for a product_id
+const getStyles = (product_id) => {
+  let values = [product_id];
+  console.log("q: gSs: product_id ENTERED", product_id);
+  return pool.query("SELECT * FROM styles where product_id = $1", values)
+  .then(res => {
+    console.log("q: gS r.rs:", res.rows);
+    // return res.rows[0];
+    return res.rows;
+  })
+};
 
 console.log("q.js: LEAVING");
 
 module.exports = {
+  getAllProducts,
   getProduct,
+  getFeatures,
   getStyles
 }
 

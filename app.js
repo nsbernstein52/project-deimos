@@ -10,23 +10,45 @@ app.use(express.json());
 console.log( new Date());
 console.log("a.js: ENTERING");
 
-// getProduct
-app.get('/productsdb/:id', (req, res) => {
+// getAllProducts
+app.get('/productsdb/', (req, res) => {
   console.log("a.js: gP: ENTERED");
-  pg.getProduct(req.params.id)
+  pg.getAllProducts()
   .then((results) => {
-    console.log("a.js gP: r.r.[0]: COMPLETED",results);
+    console.log("a.js gAPs: r.r.[3]: COMPLETED", results[3]);
     res.send(results);
   })
   .catch(err => console.log(err));
 });
 
-// getStyle
+// getProduct
+app.get('/productsdb/:id', (req, res) => {
+  console.log("a.js: gP: ENTERED");
+  pg.getProduct(req.params.id)
+  .then((results) => {
+    console.log("a.js gP: r.r.[0]: COMPLETED", results);
+    res.send(results);
+  })
+  .catch(err => console.log(err));
+});
+
+// getFeatures for a product_id 
+app.get('/productsdb/features/:id', (req, res) => {
+  console.log("a.js: gFs: ENTERED");
+  pg.getFeatures(req.params.id)
+  .then((results) => {
+    console.log("a.js gFs: r.r.[0]: COMPLETED", results);
+    res.send(results);
+  })
+  .catch(err => console.log(err));
+});
+
+// getStyles for a product_id
 app.get('/productsdb/styles/:id', (req, res) => {
-  console.log("a.js: gS: ENTERED");
+  console.log("a.js: gSs: ENTERED");
   pg.getStyles(req.params.id)
   .then((results) => {
-    console.log("a.js gS: r.r.[0]: COMPLETED",results);
+    console.log("a.js gS: r.r.[0]: COMPLETED", results);
     res.send(results);
   })
   .catch(err => console.log(err));
