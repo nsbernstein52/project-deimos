@@ -10,11 +10,23 @@ app.use(express.json());
 console.log( new Date());
 console.log("a.js: ENTERING");
 
+// getProduct
 app.get('/productsdb/:id', (req, res) => {
   console.log("a.js: gP: ENTERED");
   pg.getProduct(req.params.id)
   .then((results) => {
     console.log("a.js gP: r.r.[0]: COMPLETED",results);
+    res.send(results);
+  })
+  .catch(err => console.log(err));
+});
+
+// getStyle
+app.get('/productsdb/styles/:id', (req, res) => {
+  console.log("a.js: gS: ENTERED");
+  pg.getStyles(req.params.id)
+  .then((results) => {
+    console.log("a.js gS: r.r.[0]: COMPLETED",results);
     res.send(results);
   })
   .catch(err => console.log(err));
