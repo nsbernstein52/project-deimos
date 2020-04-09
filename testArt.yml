@@ -14,7 +14,7 @@ config:
   target: "http://localhost:3000"
   phases:
     - duration: 60
-      arrivalRate: 2000
+      arrivalRate: 1000
   # payload:
   #   # path: "keywords.csv"
   #   path: "?count=1000"
