@@ -67,6 +67,17 @@ app.get('/productsdb/styles/:id', (req, res) => {
   .catch(err => console.log(err));
 });
 
+// getRelatedProductsIds for a product_id
+app.get('/productsdb/skus/:id', (req, res) => {
+  // console.log("a:: gRPsIds: ENTERED");
+  pg.getRelatedProductsIds(req.params.id)
+  .then((results) => {
+    // console.log("a:: gRPsIds: r.rs: COMPLETED", results);
+    res.send(results);
+  })
+  .catch(err => console.log(err));
+});
+
 // getSkus for a style_id
 app.get('/productsdb/skus/:id', (req, res) => {
   // console.log("a:: gSks: ENTERED");
