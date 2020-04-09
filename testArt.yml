@@ -38,6 +38,10 @@ scenarios:
       - loop:
           - get:
               url: "/productsdb/products/{{ $loopElement }}"
+              # url: "/productsdb/features/{{ $loopElement }}"
+              # url: "/productsdb/styles/{{ $loopElement }}"
+              # url: "/productsdb/skus/{{ $loopElement }}"
+              # url: "/productsdb/photos/{{ $loopElement }}"
         over: ids
   
 # scenarios:
