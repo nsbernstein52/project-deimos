@@ -7,7 +7,7 @@ const pool = new Pool({
   port: 5432 // GOOD?  BAD?
 });
 
-console.log( new Date());
+// console.log( new Date());
 console.log("q.js: ENTERING");
 
 // pool.query('SELECT NOW()', (err, res) => {
@@ -87,7 +87,7 @@ const getPhotos = (style_id) => {
   })
 };
 
-console.log("q.js: LEAVING");
+// console.log("q.js: LEAVING");
 
 module.exports = {
   getAllProducts,
