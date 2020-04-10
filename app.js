@@ -10,7 +10,7 @@ const PORT = 3000;
 app.use(express.json());
 
 console.log( new Date());
-console.log("a.js: ENTERING");
+// console.log("a.js: ENTERING");
 
 // getAllProducts
 app.get('/productsdb/', (req, res) => {
@@ -45,16 +45,16 @@ app.get('/productsdb/features/:id', (req, res) => {
   .catch(err => console.log(err));
 });
 
-// getOneProductStyle for a product_id
-app.get('/productsdb/products/id/styles', (req, res) => {
-  // console.log("a:: gOPS: ENTERED");
-  pg.getOneProductStyle(req.params.id)
-  .then((results) => {
-    // console.log("a:: gOPS: r.rs: COMPLETED", results);
-    res.send(results);
-  })
-  .catch(err => console.log(err));
-});
+// // getOneProductStyle for a product_id
+// app.get('/productsdb/products/id/styles', (req, res) => {
+//   // console.log("a:: gOPS: ENTERED");
+//   pg.getOneProductStyle(req.params.id)
+//   .then((results) => {
+//     // console.log("a:: gOPS: r.rs: COMPLETED", results);
+//     res.send(results);
+//   })
+//   .catch(err => console.log(err));
+// });
 
 // getStyles for a product_id
 app.get('/productsdb/styles/:id', (req, res) => {
@@ -62,17 +62,6 @@ app.get('/productsdb/styles/:id', (req, res) => {
   pg.getStyles(req.params.id)
   .then((results) => {
     // console.log("a:: gSs: r.rs: COMPLETED", results);
-    res.send(results);
-  })
-  .catch(err => console.log(err));
-});
-
-// getRelatedProductsIds for a product_id
-app.get('/productsdb/skus/:id', (req, res) => {
-  // console.log("a:: gRPsIds: ENTERED");
-  pg.getRelatedProductsIds(req.params.id)
-  .then((results) => {
-    // console.log("a:: gRPsIds: r.rs: COMPLETED", results);
     res.send(results);
   })
   .catch(err => console.log(err));
