@@ -43,3 +43,8 @@ CREATE TABLE features (
   value TEXT
 );
 
+CREATE INDEX products_index ON products (id);
+CREATE INDEX product_features_index ON features (product_id);
+CREATE INDEX product_styles_index ON styles (product_id);
+CREATE INDEX style_skus_index ON skus(style_id);
+CREATE INDEX style_photos_index ON photos(style_id);
