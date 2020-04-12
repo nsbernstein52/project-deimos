@@ -8,7 +8,7 @@ const pool = new Pool({
 });
 
 // console.log( new Date());
-console.log("q.js: ENTERING");
+// console.log("q.js: ENTERING");
 
 // pool.query('SELECT NOW()', (err, res) => {
 //   console.log(err, res)
