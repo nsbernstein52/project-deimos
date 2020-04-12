@@ -9,7 +9,7 @@ const PORT = 3000;
 
 app.use(express.json());
 
-console.log( new Date());
+// let entryTime = new Date();
 // console.log("a.js: ENTERING");
 
 // getAllProducts
@@ -25,10 +25,13 @@ app.get('/productsdb/', (req, res) => {
 
 // getProduct
 app.get('/productsdb/:id', (req, res) => {
+  // let entryTime = new Date();
+  // console.log("a:: gP: req.url: ", req.url);
   // console.log("a:: gP: ENTERED");
   pg.getProduct(req.params.id)
   .then((results) => {
     // console.log("a:: gP: r.r.[0]: COMPLETED", results);
+    // console.log("duration to complete call: ", new Date() - entryTime, req.url);
     res.send(results);
   })
   .catch(err => console.log(err));
@@ -36,10 +39,12 @@ app.get('/productsdb/:id', (req, res) => {
 
 // getFeatures for a product_id 
 app.get('/productsdb/features/:id', (req, res) => {
+  // let entryTime = new Date();
   // console.log("a:: gFs: ENTERED");
   pg.getFeatures(req.params.id)
   .then((results) => {
     // console.log("a:: gFs: r.r.[0]: COMPLETED", results);
+    // console.log("duration to complete call: ", new Date() - entryTime, req.url);
     res.send(results);
   })
   .catch(err => console.log(err));
@@ -58,10 +63,12 @@ app.get('/productsdb/features/:id', (req, res) => {
 
 // getStyles for a product_id
 app.get('/productsdb/styles/:id', (req, res) => {
+  // let entryTime = new Date();
   // console.log("a:: gSs: ENTERED");
   pg.getStyles(req.params.id)
   .then((results) => {
     // console.log("a:: gSs: r.rs: COMPLETED", results);
+    // console.log("duration to complete call: ", new Date() - entryTime, req.url);
     res.send(results);
   })
   .catch(err => console.log(err));
@@ -69,10 +76,12 @@ app.get('/productsdb/styles/:id', (req, res) => {
 
 // getSkus for a style_id
 app.get('/productsdb/skus/:id', (req, res) => {
+  // let entryTime = new Date();
   // console.log("a:: gSks: ENTERED");
   pg.getSkus(req.params.id)
   .then((results) => {
     // console.log("a:: gSks: r.rs: COMPLETED", results);
+    // console.log("duration to complete call: ", new Date() - entryTime, req.url);
     res.send(results);
   })
   .catch(err => console.log(err));
@@ -80,10 +89,12 @@ app.get('/productsdb/skus/:id', (req, res) => {
 
 // getPhotos for a style_id
 app.get('/productsdb/photos/:id', (req, res) => {
+  // let entryTime = new Date();
   // console.log("a:: gPhs: ENTERED");
   pg.getPhotos(req.params.id)
   .then((results) => {
     // console.log("a:: gPhs: r.rs: COMPLETED", results);
+    // console.log("duration to complete call: ", new Date() - entryTime, req.url);
     res.send(results);
   })
   .catch(err => console.log(err));
