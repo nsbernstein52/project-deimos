@@ -3,8 +3,9 @@ const { Pool } = require('pg')
 const pool = new Pool({
   user: 'nsb52',
   database: 'productsdb',
-  password: 'Psa2020s',
+  // password: 'Psa2020s',
   port: 5432 // GOOD?  BAD?
+  // port: 4000 // GOOD?  BAD?
 });
 
 // console.log( new Date());
