@@ -4,8 +4,12 @@ const express = require('express');
 const app = express();
 const pg = require("./pg/query.js");
 
-// const PORT = process.env.PORT || 3000;
-const PORT = 3000;
+// require('dotenv').config()
+
+const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 4000;
+// const PORT = 3000;
+// const PORT = 3000;
 
 app.use(express.json());
 
