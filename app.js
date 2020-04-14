@@ -4,16 +4,19 @@ const express = require('express');
 const app = express();
 const pg = require("./pg/query.js");
 
+const cors = require('cors');
+app.use(cors());
+
 // require('dotenv').config()
 
 const PORT = process.env.PORT || 3000;
 // const PORT = process.env.PORT || 4000;
-// const PORT = 3000;
+// const PORT = 4000;
 // const PORT = 3000;
 
 app.use(express.json());
 
-// let entryTime = new Date();
+let entryTime = new Date();
 // console.log("a.js: ENTERING");
 
 // getAllProducts
@@ -42,7 +45,7 @@ app.get('/productsdb/:id', (req, res) => {
 });
 
 // getFeatures for a product_id 
-app.get('/productsdb/features/:id', (req, res) => {
+app.get('/productsdb/:id/features', (req, res) => {
   // let entryTime = new Date();
   // console.log("a:: gFs: ENTERED");
   pg.getFeatures(req.params.id)
@@ -66,7 +69,7 @@ app.get('/productsdb/features/:id', (req, res) => {
 // });
 
 // getStyles for a product_id
-app.get('/productsdb/styles/:id', (req, res) => {
+app.get('/productsdb/:id/styles', (req, res) => {
   // let entryTime = new Date();
   // console.log("a:: gSs: ENTERED");
   pg.getStyles(req.params.id)
@@ -79,7 +82,7 @@ app.get('/productsdb/styles/:id', (req, res) => {
 });
 
 // getSkus for a style_id
-app.get('/productsdb/skus/:id', (req, res) => {
+app.get('/productsdb/:id/skus', (req, res) => {
   // let entryTime = new Date();
   // console.log("a:: gSks: ENTERED");
   pg.getSkus(req.params.id)
@@ -92,7 +95,7 @@ app.get('/productsdb/skus/:id', (req, res) => {
 });
 
 // getPhotos for a style_id
-app.get('/productsdb/photos/:id', (req, res) => {
+app.get('/productsdb/:id/photos', (req, res) => {
   // let entryTime = new Date();
   // console.log("a:: gPhs: ENTERED");
   pg.getPhotos(req.params.id)
