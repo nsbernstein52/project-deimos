@@ -1,9 +1,15 @@
 // const { Pool, Client } = require('pg')
 const { Pool } = require('pg')
 const pool = new Pool({
-  user: 'nsb52',
   database: 'productsdb',
-  // password: 'Psa2020s',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  // process.env.DB_USER should be recognized by root
+  // host private dns 
+  // security group allow ot access each other
+  // ipAddress: 3.16.68.230/32,
+  // password: 'PW',
   port: 5432 // GOOD?  BAD?
   // port: 4000 // GOOD?  BAD?
 });
