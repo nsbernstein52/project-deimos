@@ -2,3 +2,4 @@
 *.png
 *.svg
 node_modules
+*.env
