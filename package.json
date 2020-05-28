@@ -1,7 +1,7 @@
 {
   "name": "project-deimos",
-  "version": "1.0.0",
-  "description": "SDC-Overview",
+  "version": "0.1.0",
+  "description": "Feel free to play around on this example retail web page.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/martianMethods/project-deimos.git"
+    "url": "https://github.com/martianMethods/project-deimos.git"
   },
-  "author": "nsb",
+  "author": "Neil Bernstein",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/martianMethods/project-deimos/issues"
