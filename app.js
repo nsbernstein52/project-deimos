@@ -1,7 +1,7 @@
 // require('newrelic');
 require('dotenv').config();
-// const dotenv = require('dotenv');
 
+// const dotenv = require('dotenv');
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -21,94 +21,93 @@ let entryTime = new Date();
 
 // QQQ
 app.get('/', (request, response) => {
-  res.sendFile(pathname);
+  response.sendFile(pathname);
 });
 
-app.get('/productsdb/', (req, res) => {
+app.get('/productsdb/', (request, response) => {
   console.log('a:: gAP: ENTERED');
   pg.getAllProducts()
-  .then((results) => {
-    console.log('a:: gAPs: r.r.[3]: COMPLETED', results[3]);
-    res.send(results);
+  .then((products) => {
+    console.log('a:: gAPs: r.r.[3]: COMPLETED', products[3]);
+    response.send(products);
   })
-  .catch(err => console.log(err));
+  .catch(error => console.error(error));
 });
 
 // CRUD
-app.get('/productsdb/:id', (req, res) => {
+
+app.get('/productsdb/:id', (request, response) => {
   // let entryTime = new Date();
-  console.log('a:: gP: ENTERED: req.url: ', req.url);
+  console.log('a:: gP: ENTERED: request.url: ', request.url);
   // console.log('a:: gP: ENTERED');
-  pg.getProduct(req.params.id)
-  .then((results) => {
-    console.log('a:: gP: r.r.[0]: COMPLETED', results);
-    // console.log('duration to complete call: ', new Date() - entryTime, req.url);
-    res.send(results);
+  pg.getProduct(request.params.id)
+  .then((product) => {
+    console.log('a:: gP: r.r.[0]: COMPLETED', product);
+    // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    response.send(product);
   })
-  .catch(err => console.log(err));
+  .catch(error => console.error(error));
 });
 
-// getFeatures for a product_id 
-app.get('/productsdb/:id/features', (req, res) => {
+app.get('/productsdb/:id/features', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gFs: ENTERED');
-  pg.getFeatures(req.params.id)
-  .then((results) => {
-    // console.log('a:: gFs: r.r.[0]: COMPLETED', results);
-    // console.log('duration to complete call: ', new Date() - entryTime, req.url);
-    res.send(results);
+  pg.getFeatures(request.params.id)
+  .then((features) => {
+    // console.log('a:: gFs: r.r.[0]: COMPLETED', features);
+    // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    response.send(features);
   })
-  .catch(err => console.log(err));
+  .catch(error => console.error(error));
 });
 
 // // getOneProductStyle for a product_id
-// app.get('/productsdb/products/id/styles', (req, res) => {
+// app.get('/productsdb/products/id/styles', (request, response) => {
 //   // console.log('a:: gOPS: ENTERED');
-//   pg.getOneProductStyle(req.params.id)
-//   .then((results) => {
-//     // console.log('a:: gOPS: r.rs: COMPLETED', results);
-//     res.send(results);
+//   pg.getOneProductStyle(request.params.id)
+//   .then((style) => {
+//     // console.log('a:: gOPS: r.rs: COMPLETED', style);
+//     response.send(style);
 //   })
-//   .catch(err => console.log(err));
+//   .catch(error => console.error(error));
 // });
 
-// getStyles for a product_id
-app.get('/productsdb/:id/styles', (req, res) => {
+app.get('/productsdb/:id/styles', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gSs: ENTERED');
-  pg.getStyles(req.params.id)
-  .then((results) => {
-    // console.log('a:: gSs: r.rs: COMPLETED', results);
-    // console.log('duration to complete call: ', new Date() - entryTime, req.url);
-    res.send(results);
+  pg.getStyles(request.params.id)
+  .then((styles) => {
+    // console.log('a:: gSs: r.rs: COMPLETED', styles);
+    // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    response.send(styles);
   })
-  .catch(err => console.log(err));
+  .catch(error => console.error(error));
 });
 
 // getSkus for a style_id
-app.get('/productsdb/:id/skus', (req, res) => {
+app.get('/productsdb/:id/skus', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gSks: ENTERED');
-  pg.getSkus(req.params.id)
-  .then((results) => {
-    // console.log('a:: gSks: r.rs: COMPLETED', results);
-    // console.log('duration to complete call: ', new Date() - entryTime, req.url);
-    res.send(results);
+  pg.getSkus(request.params.id)
+  .then((skus) => {
+    // console.log('a:: gSks: r.rs: COMPLETED', skus);
+    // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    response.send(skus);
   })
-  .catch(err => console.log(err));
+  .catch(error => console.error(error));
 });
 
 // getPhotos for a style_id
-app.get('/productsdb/:id/photos', (req, res) => {
+app.get('/productsdb/:id/photos', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gPhs: ENTERED');
-  pg.getPhotos(req.params.id)
-  .then((results) => {
-    // console.log('a:: gPhs: r.rs: COMPLETED', results);
-    // console.log('duration to complete call: ', new Date() - entryTime, req.url);
-    res.send(results);
+  pg.getPhotos(request.params.id)
+  .then((photos) => {
+    // console.log('a:: gPhs: r.rs: COMPLETED', photos);
+    // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    response.send(photos);
   })
-  .catch(err => console.log(err));
+  .catch(error => console.error(error));
 });
 
 // console.log('a:: LEAVING');

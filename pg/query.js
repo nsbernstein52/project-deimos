@@ -17,98 +17,93 @@ const pool = new Pool({
 // console.log( new Date());
 // console.log('q.js: ENTERING');
 
-// pool.query('SELECT NOW()', (err, res) => {
-//   console.log(err, res)
+// pool.query('SELECT NOW()', (error, response) => {
+//   console.log(error, response)
 //   pool.end()
 // });
 
 // TEST POOL:  the pool will emit an error on behalf of any idle clients
 //   if it contains if a backend error or network partition happens
-pool.on('error', (err, client) => {
-  console.error('Unexpected postgres pool error on idle client', err);
+pool.on('error', (error, client) => {
+  console.error('Unexpected postgres pool error on idle client', error);
   process.exit(-1);
 });
 
 // TEST CLIENT:  callback - checkout a client
-pool.connect((connectionErr, client, done) => {
-  if (connectionErr) throw connectionErr;
-  client.query('SELECT * FROM resources WHERE id = $1', [1], (queryErr, res) => {
+pool.connect((connectionError, client, done) => {
+  if (connectionError) throw connectionError;
+  client.query('SELECT * FROM resources WHERE id = $1', [1], (queryError, response) => { // response, standalone?
     done();
-    if (queryErr) {
-      console.error('Failed to get resources from postgres pool: ', queryErr);
+    if (queryError) {
+      console.error('Failed to get resources from postgres pool: ', queryError);
     }
   });
 });
 
-// getAllProducts
 const getAllProducts = () => {
-  // let values = [];
   console.log('q: gAP: ENTERED');
   return pool.query('SELECT * FROM products')
-  .then(res => {
-    console.log('q: gAPs r.r[3]:', res.rows[3]);
-    // return res.rows[0];
-    return res.rows;
+  .then(products => {
+    console.log('q: gAPs r.r[3]:', products.rows[3]);
+    // return products.rows[0];
+    return products.rows;
   })
 };
 
-// getProduct
 const getProduct = (id) => {
-  let values = [id];
+  let productValues = [id];
   console.log('q: gP: id ENTERED', id);
-  return pool.query('SELECT * FROM products where id = $1', values)
-  .then(res => {
-    console.log('q: gP r.r[0]:', res.rows[0]);
-    // return res.rows[0];
-    return res.rows;
+  return pool.query('SELECT * FROM products where id = $1', productValues)
+  .then(product => {
+    console.log('q: gP r.r[0]:', product.rows[0]);
+    // return product.rows[0];
+    return product.rows;
   })
 };
 
-//getFeatures for a product_id
 const getFeatures = (product_id) => {
-  let values = [product_id];
+  let featuresValues = [product_id];
   // console.log('q: gFs: product_id ENTERED', product_id);
-  return pool.query('SELECT * FROM features where product_id = $1', values)
-  .then(res => {
-    // console.log('q: gS r.rs:', res.rows);
-    // return res.rows[0];
-    return res.rows;
+  return pool.query('SELECT * FROM features where product_id = $1', featuresValues)
+  .then(features => {
+    // console.log('q: gS r.rs:', features.rows);
+    // return features.rows[0];
+    return features.rows;
   })
 };
 
-//getStyles for a product_id
 const getStyles = (product_id) => {
-  let values = [product_id];
+  let featuresValues = [product_id];
   // console.log('q: gSs: product_id ENTERED', product_id);
-  return pool.query('SELECT * FROM styles where product_id = $1', values)
-  .then(res => {
-    // console.log('q: gS r.rs:', res.rows);
-    // return res.rows[0];
-    return res.rows;
+  return pool.query('SELECT * FROM styles where product_id = $1', featuresValues)
+  .then(styles => {
+    // console.log('q: gS r.rs:', styles.rows);
+    // return styles.rows[0];
+    return styles.rows;
   })
 };
 
 //getSkus for a style_id
 const getSkus = (style_id) => {
-  let values = [style_id];
+  let skusValues = [style_id];
   // console.log('q: gSks: style_id ENTERED', style_id);
-  return pool.query('SELECT * FROM skus where style_id = $1', values)
-  .then(res => {
-    // console.log('q: gSks r.rs:', res.rows);
-    // return res.rows[0];
-    return res.rows;
+  return pool.query('SELECT * FROM skus where style_id = $1', skusValues)
+  .then(skus => {
+    // console.log('q: gSks r.rs:', skus.rows);
+    // return skus.rows[0];
+    return skus.rows;
   })
 };
 
 //getPhotos for a style_id
 const getPhotos = (style_id) => {
-  let values = [style_id];
+  let photoValues = [style_id];
   // console.log('q: gPhs: style_id ENTERED', style_id);
-  return pool.query('SELECT * FROM photos where style_id = $1', values)
-  .then(res => {
-    // console.log('q: gPhs r.rs:', res.rows);
-    // return res.rows[0];
-    return res.rows;
+  return pool.query('SELECT * FROM photos where style_id = $1', photoValues)
+  .then(photos => {
+    // console.log('q: gPhs r.rs:', photos.rows);
+    // return photos.rows[0];
+    return photos.rows;
   })
 };
 
@@ -122,4 +117,3 @@ module.exports = {
   getSkus,
   getPhotos
 }
-
