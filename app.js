@@ -1,28 +1,29 @@
-require('newrelic');
+// require('newrelic');
 require('dotenv').config();
 // const dotenv = require('dotenv');
-// dotenv.load(); 
 
+const path = require('path');
 const express = require('express');
-const app = express();
+const cors = require('cors');
 const pg = require('./pg/query.js');
 
-const cors = require('cors');
-app.use(cors());
-
-// require('dotenv').config()
-
 const PORT = process.env.PORT || 3000;
-// const PORT = process.env.PORT || 4000;
-// const PORT = 4000;
-// const PORT = 3000;
+const app = express();
+// const pathname  =path.join(__dirname, '../');
 
+// dotenv.load(); 
+
+app.use(cors());
 app.use(express.json());
 
 let entryTime = new Date();
 // console.log('a.js: ENTERING');
 
-// getAllProducts
+// QQQ
+app.get('/', (request, response) => {
+  res.sendFile(pathname);
+});
+
 app.get('/productsdb/', (req, res) => {
   console.log('a:: gAP: ENTERED');
   pg.getAllProducts()
@@ -33,7 +34,7 @@ app.get('/productsdb/', (req, res) => {
   .catch(err => console.log(err));
 });
 
-// getProduct
+// CRUD
 app.get('/productsdb/:id', (req, res) => {
   // let entryTime = new Date();
   console.log('a:: gP: ENTERED: req.url: ', req.url);
@@ -113,5 +114,5 @@ app.get('/productsdb/:id/photos', (req, res) => {
 // console.log('a:: LEAVING');
 
 app.listen(PORT, () => {
-  console.log(`Web server running on: http://localhost:${PORT}`);
+  console.log(`Web server running on: http://localhost:${PORT}`, new Date());
 });
