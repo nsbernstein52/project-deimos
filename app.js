@@ -24,6 +24,10 @@ app.get('/', (request, response) => {
   response.sendFile(pathname);
 });
 
+// API CALLS
+
+// CRUD
+
 app.get('/productsdb/', (request, response) => {
   console.log('a:: gAP: ENTERED');
   pg.getAllProducts()
@@ -33,8 +37,6 @@ app.get('/productsdb/', (request, response) => {
   })
   .catch(error => console.error(error));
 });
-
-// CRUD
 
 app.get('/productsdb/:id', (request, response) => {
   // let entryTime = new Date();
