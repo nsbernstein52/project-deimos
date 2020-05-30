@@ -14,6 +14,7 @@ const pool = new Pool({
   // port: 4000 // GOOD?  BAD?
 });
 
+// console.log('q: process.env: ', process.env);
 // console.log( new Date());
 // console.log('q.js: ENTERING');
 
@@ -32,10 +33,10 @@ pool.on('error', (error, client) => {
 // TEST CLIENT:  callback - checkout a client
 pool.connect((connectionError, client, done) => {
   if (connectionError) throw connectionError;
-  client.query('SELECT * FROM resources WHERE id = $1', [1], (queryError, response) => { // response, standalone?
+  client.query('SELECT * FROM products WHERE id = $1', [1], (queryError, response) => { // response, standalone?
     done();
     if (queryError) {
-      console.error('Failed to get resources from postgres pool: ', queryError);
+      console.error('Failed to get products from postgres pool: ', queryError);
     }
   });
 });
@@ -45,9 +46,9 @@ const getAllProducts = () => {
   return pool.query('SELECT * FROM products')
   .then(products => {
     console.log('q: gAPs r.r[3]:', products.rows[3]);
-    // return products.rows[0];
     return products.rows;
   })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
 const getProduct = (id) => {
@@ -59,6 +60,7 @@ const getProduct = (id) => {
     // return product.rows[0];
     return product.rows;
   })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
 const getFeatures = (product_id) => {
