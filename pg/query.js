@@ -22,6 +22,24 @@ const pool = new Pool({
 //   pool.end()
 // });
 
+// TEST POOL:  the pool will emit an error on behalf of any idle clients
+//   if it contains if a backend error or network partition happens
+pool.on('error', (err, client) => {
+  console.error('Unexpected postgres pool error on idle client', err);
+  process.exit(-1);
+});
+
+// TEST CLIENT:  callback - checkout a client
+pool.connect((connectionErr, client, done) => {
+  if (connectionErr) throw connectionErr;
+  client.query('SELECT * FROM resources WHERE id = $1', [1], (queryErr, res) => {
+    done();
+    if (queryErr) {
+      console.error('Failed to get resources from postgres pool: ', queryErr);
+    }
+  });
+});
+
 // getAllProducts
 const getAllProducts = () => {
   // let values = [];
