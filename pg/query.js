@@ -53,11 +53,35 @@ const getAllProducts = () => {
 
 const getProduct = (id) => {
   let productValues = [id];
-  console.log('q: gP: id ENTERED', id);
-  return pool.query('SELECT * FROM products where id = $1', productValues)
+  // console.log('q: gP: id ENTERED', id);
+  return pool.query('SELECT * FROM products INNER JOIN features ON products.id = features.product_id WHERE products.id = $1', productValues)
   .then(product => {
-    console.log('q: gP r.r[0]:', product.rows[0]);
-    return product.rows;
+    // console.log('q: gP: product.rows: ', product.rows);
+    const productInfo = {
+      id: product.rows[0].product_id,
+      name: product.rows[0].name,
+      slogan: product.rows[0].slogan,
+      description: product.rows[0].description,
+      category: product.rows[0].category,
+      default_price: product.rows[0].default_price,
+      features: [],
+    };
+    // console.log('q: gP: p.r[0].feature: ', product.rows[0].feature)
+    // console.log('q: gP: p.r[0].value: ', product.rows[0].value)
+    // console.log('q: gP: p.r[1].feature: ', product.rows[1].feature)
+    // console.log('q: gP: p.r[1].value: ', product.rows[1].value)
+    for (let featureCount = 0; featureCount < product.rows.length; featureCount++) {
+      let featureObj = {
+        feature: product.rows[featureCount].feature,
+        value: product.rows[featureCount].value,
+      }
+      // console.log('q: gP fO:', featureObj);
+      productInfo.features.push(featureObj);
+    }
+    // console.log('q: gP pI:', productInfo);
+    return productInfo;
+    // console.log('q: gP r.r[0]:', product.rows[0]);
+    // return product.rows;
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
