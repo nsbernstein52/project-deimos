@@ -42,7 +42,7 @@ pool.connect((connectionError, client, done) => {
 });
 
 const getAllProducts = () => {
-  console.log('q: gAP: ENTERED');
+  console.log('q: gAPs: ENTERED');
   return pool.query('SELECT * FROM products')
   .then(products => {
     console.log('q: gAPs r.r[3]:', products.rows[3]);
@@ -57,7 +57,6 @@ const getProduct = (id) => {
   return pool.query('SELECT * FROM products where id = $1', productValues)
   .then(product => {
     console.log('q: gP r.r[0]:', product.rows[0]);
-    // return product.rows[0];
     return product.rows;
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
@@ -68,8 +67,7 @@ const getFeatures = (product_id) => {
   // console.log('q: gFs: product_id ENTERED', product_id);
   return pool.query('SELECT * FROM features where product_id = $1', featuresValues)
   .then(features => {
-    // console.log('q: gS r.rs:', features.rows);
-    // return features.rows[0];
+    // console.log('q: gFs r.rs:', features.rows);
     return features.rows;
   })
 };
