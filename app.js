@@ -35,7 +35,7 @@ app.get('/productsdb/', (request, response) => {
     console.log('a:: gAPs: r.r.[3]: COMPLETED', products[3]);
     response.send(products);
   })
-  .catch(error => console.error(error));
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 });
 
 app.get('/productsdb/:id', (request, response) => {
