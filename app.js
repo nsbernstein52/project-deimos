@@ -9,7 +9,7 @@ const pg = require('./pg/query.js');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-// const pathname  =path.join(__dirname, '../');
+// const pathname = path.join(__dirname, '../');
 
 // dotenv.load(); 
 
@@ -29,7 +29,7 @@ app.get('/', (request, response) => {
 // CRUD
 
 app.get('/productsdb/', (request, response) => {
-  console.log('a:: gAP: ENTERED');
+  console.log('a:: gAPs: ENTERED');
   pg.getAllProducts()
   .then((products) => {
     console.log('a:: gAPs: r.r.[3]: COMPLETED', products[3]);
