@@ -42,10 +42,10 @@ pool.connect((connectionError, client, done) => {
 });
 
 const getAllProducts = () => {
-  console.log('q: gAPs: ENTERED');
+  // console.log('q: gAPs: ENTERED');
   return pool.query('SELECT * FROM products')
   .then(products => {
-    console.log('q: gAPs r.r[3]:', products.rows[3]);
+    // console.log('q: gAPs r.r[3]:', products.rows[3]);
     return products.rows;
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line

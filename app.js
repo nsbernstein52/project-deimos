@@ -29,10 +29,10 @@ app.get('/', (request, response) => {
 // CRUD
 
 app.get('/productsdb/', (request, response) => {
-  console.log('a:: gAPs: ENTERED');
+  // console.log('a:: gAPs: ENTERED');
   pg.getAllProducts()
   .then((products) => {
-    console.log('a:: gAPs: r.r.[3]: COMPLETED', products[3]);
+    // console.log('a:: gAPs: r.r.[3]: COMPLETED', products[3]);
     response.send(products);
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
@@ -40,11 +40,11 @@ app.get('/productsdb/', (request, response) => {
 
 app.get('/productsdb/:id', (request, response) => {
   // let entryTime = new Date();
-  console.log('a:: gP: ENTERED: request.url: ', request.url);
+  // console.log('a:: gP: ENTERED: request.url: ', request.url);
   // console.log('a:: gP: ENTERED');
   pg.getProduct(request.params.id)
   .then((product) => {
-    console.log('a:: gP: r.r.[0]: COMPLETED', product);
+    // console.log('a:: gP: r.r.[0]: COMPLETED', product);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     response.send(product);
   })
