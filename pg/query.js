@@ -70,6 +70,7 @@ const getFeatures = (product_id) => {
     // console.log('q: gFs r.rs:', features.rows);
     return features.rows;
   })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
 const getStyles = (product_id) => {
@@ -81,6 +82,7 @@ const getStyles = (product_id) => {
     // return styles.rows[0];
     return styles.rows;
   })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
 //getSkus for a style_id
@@ -93,6 +95,7 @@ const getSkus = (style_id) => {
     // return skus.rows[0];
     return skus.rows;
   })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
 //getPhotos for a style_id
@@ -105,6 +108,7 @@ const getPhotos = (style_id) => {
     // return photos.rows[0];
     return photos.rows;
   })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
 // console.log('q.js: LEAVING');

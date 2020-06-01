@@ -48,7 +48,8 @@ app.get('/productsdb/:id', (request, response) => {
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     response.send(product);
   })
-  .catch(error => console.error(error));
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+  // .catch(error => console.error(error));
 });
 
 app.get('/productsdb/:id/features', (request, response) => {
@@ -60,7 +61,8 @@ app.get('/productsdb/:id/features', (request, response) => {
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     response.send(features);
   })
-  .catch(error => console.error(error));
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+  // .catch(error => console.error(error));
 });
 
 // // getOneProductStyle for a product_id
@@ -83,7 +85,8 @@ app.get('/productsdb/:id/styles', (request, response) => {
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     response.send(styles);
   })
-  .catch(error => console.error(error));
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+  // .catch(error => console.error(error));
 });
 
 // getSkus for a style_id
@@ -96,7 +99,8 @@ app.get('/productsdb/:id/skus', (request, response) => {
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     response.send(skus);
   })
-  .catch(error => console.error(error));
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+  // .catch(error => console.error(error));
 });
 
 // getPhotos for a style_id
@@ -109,7 +113,8 @@ app.get('/productsdb/:id/photos', (request, response) => {
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     response.send(photos);
   })
-  .catch(error => console.error(error));
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+  // .catch(error => console.error(error));
 });
 
 // console.log('a:: LEAVING');
