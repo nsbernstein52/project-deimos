@@ -97,19 +97,61 @@ const getFeatures = (product_id) => {
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
+// const getAllStyleInfo = (id) => {
+//   Promise.all([getStyles(id), getSkus(id), getPhotos(id)])
+//     .then((values) => {
+//     console.log(values);
+//   });
+// }
+
+// getAllStyleInfo(99);
+
 const getStyles = (product_id) => {
   let stylesValues = [product_id];
   // console.log('q: gSs: product_id ENTERED', product_id);
   // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = 
-  // return pool.query('SELECT * FROM styles where product_id = $1', stylesValues)
-  return pool.query('SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1', stylesValues)
+  return pool.query('SELECT * FROM styles where product_id = $1', stylesValues)
+  // return pool.query('SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1', stylesValues)
   .then(styles => {
-    // console.log('q: gS r.rs:', styles.rows);
-    // return styles.rows[0];
     return styles.rows;
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
+        // console.log('q: gP: product.rows: ', product.rows);
+        // const stylesInfo = {
+        //   product_id: styles.rows[0].product_id,
+        //   results: [],
+        // };
+        // console.log('q: gP: p.r[0].feature: ', styles.rows[0].feature)
+        // console.log('q: gP: p.r[0].value: ', styles.rows[0].value)
+        // console.log('q: gP: p.r[1].feature: ', styles.rows[1].feature)
+        // console.log('q: gP: p.r[1].value: ', styles.rows[1].value)
+        // for (let styleCount = 0; styleCount < styles.rows.length; styleCount++) {
+        //   let stylesObj = {
+        //     style_id: styles.rows[styleCount].style_id,
+        //     name: styles.rows[0].name,
+        //     original_price: styles.rows[0].original_price,
+        //     sale_price: styles.rows[0].sale_price,
+        //     default: styles.rows[styleCount].default,
+        //     photos: [],
+        //     skus: {},
+        //   }
+        //   for (let photoCount = 0; photoCount < styles.rows.length; photoCount++) {
+        //     let photoObj = {
+        //       thumbnail_url: styles.rows[photoCount].thumbnail_url,
+        //       url: styles.rows[photoCount].url,
+        //     }
+                // console.log('q: gP fO:', stylesObj);
+          // stylesInfo.photos.push(photoObj);
+        // }
+        // console.log('q: gP pI:', stylesInfo);
+        // return stylesInfo;
+    // console.log('q: gS r.rs:', styles.rows);
+    // return styles.rows[0];
+    // return styles.rows;
+//   })
+//   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+// };
 
 //getSkus for a style_id
 const getSkus = (style_id) => {
@@ -143,6 +185,7 @@ module.exports = {
   getAllProducts,
   getProduct,
   getFeatures,
+  // getAllStyleInfo,
   getStyles,
   getSkus,
   getPhotos
