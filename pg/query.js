@@ -98,9 +98,11 @@ const getFeatures = (product_id) => {
 };
 
 const getStyles = (product_id) => {
-  let featuresValues = [product_id];
+  let stylesValues = [product_id];
   // console.log('q: gSs: product_id ENTERED', product_id);
-  return pool.query('SELECT * FROM styles where product_id = $1', featuresValues)
+  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = 
+  // return pool.query('SELECT * FROM styles where product_id = $1', stylesValues)
+  return pool.query('SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1', stylesValues)
   .then(styles => {
     // console.log('q: gS r.rs:', styles.rows);
     // return styles.rows[0];
