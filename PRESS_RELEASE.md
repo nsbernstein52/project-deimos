@@ -1,5 +1,8 @@
-# SATURN APPAREL
-## Feel free to play around on this example retail web page.
+# SATURN APPAREL - PROJECT DEIMOS
+## Feel free to play around on Saturn Apparel's example retail web page.
+
+## Server-side microservices implemented by Neil Bernstein:
+Product Overview
 
 ## Problems - General
 1. It can be tedious to navigate a retail web page.
