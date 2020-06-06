@@ -1,18 +1,19 @@
 {
   "name": "project-deimos",
   "version": "0.1.0",
-  "description": "Feel free to play around on this example retail web page.",
+  "description": "Feel free to play around on Saturn Apparel's example retail web page.",
+  "author": "Neil Bernstein",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": "nodemon app.js"
+    "start": "node ./start.js",
+    "test": "mocha",
+    "nodemon": "nodemon start.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/martianMethods/project-deimos.git"
   },
-  "author": "Neil Bernstein",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/martianMethods/project-deimos/issues"
   },
@@ -25,5 +26,9 @@
     "nodemon": "^2.0.2",
     "pg": "^8.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^7.2.0"
+  }
 }
