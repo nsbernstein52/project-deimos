@@ -9,6 +9,9 @@ const pg = require('./pg/query.js');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+
+const pathname = path.join(__dirname, '../public/index.html');
+
 // const pathname = path.join(__dirname, '../');
 
 // dotenv.load(); 
@@ -119,6 +122,8 @@ app.get('/productsdb/:id/photos', (request, response) => {
 
 // console.log('a:: LEAVING');
 
-app.listen(PORT, () => {
-  console.log(`Web server running on: http://localhost:${PORT}`, new Date());
-});
+// app.listen(PORT, () => {
+//   console.log(`Web server running on: http://localhost:${PORT}`, new Date());
+// });
+
+module.exports = app;
