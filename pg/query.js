@@ -58,7 +58,7 @@ const getProduct = (id) => {
   .then(product => {
     // console.log('q: gP: product.rows: ', product.rows);
     const productInfo = {
-      id: product.rows[0].product_id,
+      id: product.rows[0].id,
       name: product.rows[0].name,
       slogan: product.rows[0].slogan,
       description: product.rows[0].description,
