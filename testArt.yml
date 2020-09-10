@@ -48,7 +48,7 @@ scenarios:
   - flow:
       - loop:
           - get:
-              url: "/productsdb/{{ $loopElement }}"
+              url: "/productsdb/products/{{ $loopElement }}"
               # url: "/productsdb/features/{{ $loopElement }}"
               # url: "/productsdb/styles/{{ $loopElement }}"
               # url: "/productsdb/skus/{{ $loopElement }}"

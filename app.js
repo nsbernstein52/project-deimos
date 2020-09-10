@@ -41,7 +41,7 @@ app.get('/productsdb/', (request, response) => {
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 });
 
-app.get('/productsdb/:id', (request, response) => {
+app.get('/productsdb/products/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gP: ENTERED: request.url: ', request.url);
   // console.log('a:: gP: ENTERED');
