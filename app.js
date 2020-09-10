@@ -55,7 +55,7 @@ app.get('/productsdb/products/:id', (request, response) => {
   // .catch(error => console.error(error));
 });
 
-app.get('/productsdb/:id/features', (request, response) => {
+app.get('/productsdb/features/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gFs: ENTERED');
   pg.getFeatures(request.params.id)
@@ -79,7 +79,7 @@ app.get('/productsdb/:id/features', (request, response) => {
 //   .catch(error => console.error(error));
 // });
 
-app.get('/productsdb/:id/styles', (request, response) => {
+app.get('/productsdb/styles/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gSs: ENTERED');
   pg.getStyles(request.params.id)
@@ -93,7 +93,7 @@ app.get('/productsdb/:id/styles', (request, response) => {
 });
 
 // getSkus for a style_id
-app.get('/productsdb/:id/skus', (request, response) => {
+app.get('/productsdb/skus/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gSks: ENTERED');
   pg.getSkus(request.params.id)
@@ -107,7 +107,7 @@ app.get('/productsdb/:id/skus', (request, response) => {
 });
 
 // getPhotos for a style_id
-app.get('/productsdb/:id/photos', (request, response) => {
+app.get('/productsdb/photos/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gPhs: ENTERED');
   pg.getPhotos(request.params.id)
