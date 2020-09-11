@@ -13,6 +13,13 @@ CREATE TABLE products (
   default_price INT
 );
 
+CREATE TABLE features (
+  id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products(id),
+  feature TEXT,
+  value TEXT
+);
+
 CREATE TABLE styles (
   id SERIAL PRIMARY KEY,
   product_id INT REFERENCES products(id),
@@ -34,13 +41,6 @@ CREATE TABLE skus (
   style_id INT REFERENCES styles(id),
   size TEXT,
   quantity INT
-);
-
-CREATE TABLE features (
-  id SERIAL PRIMARY KEY,
-  product_id INT REFERENCES products(id),
-  feature TEXT,
-  value TEXT
 );
 
 CREATE INDEX products_index ON products (id);
