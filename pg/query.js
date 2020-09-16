@@ -121,87 +121,87 @@ const getFeatures = (product_id) => {
 
 // getAllStyleInfo(99);
 
-const getStyles = (product_id) => {
-  let entryTime = new Date();
-
-  let stylesArgs = [product_id];
-  // console.log('q: gSs: product_id ENTERED', product_id);
-  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs
-  return pool.query('SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs)
-  .then(styles => {
-        // console.log('q: gP: product.rows: ', product.rows);
-        const stylesInfo = {
-          product_id: product_id,
-          results: [],
-        };
-        var stylesObj = {};
-        const styleIdsArr = [];
-        for (let styleCount = 0; styleCount < styles.rows.length; styleCount++) {
-          stylesObj = {
-            style_id: styles.rows[styleCount].id,
-            name: styles.rows[styleCount].name,
-            original_price: styles.rows[styleCount].original_price,
-            sale_price: styles.rows[styleCount].sale_price,
-            default: styles.rows[styleCount].default,
-            photos: [],
-            skus: {},
-          }
-          if (! styleIdsArr.includes(stylesObj.style_id)) {
-            styleIdsArr.push(stylesObj.style_id);
-            styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
-          };
-          // console.log('q: gSs: s.r[0]: ', styles.rows[0])
-          // console.log('q: gSs: s.r[1]: ', styles.rows[1])
-
-          const photosIdsArr = [];
-          // for (let photoCount = 0; photoCount < styles.rows[styleCount].photos.length; photoCount++) {
-          //   let photoObjs = {
-          //     thumbnail_url: styles.rows[photoCount].thumbnail_url,
-          //     url: styles.rows[photoCount].url,
-          //   }
-
-          //   // console.log('q: gSs O:', styleObjs);
-          //   stylesObj.photos.push(photoObjs);
-          // }
-
-          // for (let skusKey in styles.rows) { // photoCount = 0; photoCount < styles.rows.length; photoCount++) {
-          //   let skuObj = {
-          //     skusKey: styles.rows[skusKey].value
-          //   }
-          //       // console.log('q: gP fO:', styleObjs);
-          //   stylesObj.photos.push(photoObjs);
-          // }
-        }
-        console.log('q: gSs: s.r.length: ', styles.rows.length);
-        console.log('q: gSs: s.r[0]: ', styles.rows[0]);
-        console.log('q: gSs: s.r[0]: ', styles.rows[100]);
-        // console.log('q: gSs: s.r[1]: ', styles.rows[1]);
-        console.log('q: gSs: s.r.length: ', styleIdsArr.length);
-        console.log('q: gSs: UNIQUE sIds: ', styleIdsArrSorted);
-      // console.log('q: gP pI:', stylesInfo);
-        // return stylesInfo;
-    // console.log('q: gS r.rs:', styles.rows);
-    // return styles.rows[0];
-    // return styles.rows;
-    console.log('query duration to complete call [ms]: ', new Date() - entryTime);
-
-    return stylesObj;
-  })
-  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-};
-
-
 // const getStyles = (product_id) => {
-//   let stylesValues = [product_id];
+//   let entryTime = new Date();
+
+//   let stylesArgs = [product_id];
 //   // console.log('q: gSs: product_id ENTERED', product_id);
-//   // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id WHERE products.id = $1', stylesValues
-//   return pool.query('SELECT * FROM styles where product_id = $1', stylesValues)
-//   // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1', stylesValues)
+//   // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs
+//   return pool.query('SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs)
 //   .then(styles => {
-//     return styles.rows;
+//         // console.log('q: gP: product.rows: ', product.rows);
+//         const stylesInfo = {
+//           product_id: product_id,
+//           results: [],
+//         };
+//         var stylesObj = {};
+//         const styleIdsArr = [];
+//         for (let styleCount = 0; styleCount < styles.rows.length; styleCount++) {
+//           stylesObj = {
+//             style_id: styles.rows[styleCount].id,
+//             name: styles.rows[styleCount].name,
+//             original_price: styles.rows[styleCount].original_price,
+//             sale_price: styles.rows[styleCount].sale_price,
+//             default: styles.rows[styleCount].default,
+//             photos: [],
+//             skus: {},
+//           }
+//           if (! styleIdsArr.includes(stylesObj.style_id)) {
+//             styleIdsArr.push(stylesObj.style_id);
+//             styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
+//           };
+//           // console.log('q: gSs: s.r[0]: ', styles.rows[0])
+//           // console.log('q: gSs: s.r[1]: ', styles.rows[1])
+
+//           const photosIdsArr = [];
+//           // for (let photoCount = 0; photoCount < styles.rows[styleCount].photos.length; photoCount++) {
+//           //   let photoObjs = {
+//           //     thumbnail_url: styles.rows[photoCount].thumbnail_url,
+//           //     url: styles.rows[photoCount].url,
+//           //   }
+
+//           //   // console.log('q: gSs O:', styleObjs);
+//           //   stylesObj.photos.push(photoObjs);
+//           // }
+
+//           // for (let skusKey in styles.rows) { // photoCount = 0; photoCount < styles.rows.length; photoCount++) {
+//           //   let skuObj = {
+//           //     skusKey: styles.rows[skusKey].value
+//           //   }
+//           //       // console.log('q: gP fO:', styleObjs);
+//           //   stylesObj.photos.push(photoObjs);
+//           // }
+//         }
+//         console.log('q: gSs: s.r.length: ', styles.rows.length);
+//         console.log('q: gSs: s.r[0]: ', styles.rows[0]);
+//         console.log('q: gSs: s.r[0]: ', styles.rows[100]);
+//         // console.log('q: gSs: s.r[1]: ', styles.rows[1]);
+//         console.log('q: gSs: s.r.length: ', styleIdsArr.length);
+//         console.log('q: gSs: UNIQUE sIds: ', styleIdsArrSorted);
+//       // console.log('q: gP pI:', stylesInfo);
+//         // return stylesInfo;
+//     // console.log('q: gS r.rs:', styles.rows);
+//     // return styles.rows[0];
+//     // return styles.rows;
+//     console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+
+//     return stylesObj;
 //   })
 //   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 // };
+
+
+const getStyles = (product_id) => {
+  let stylesArgs = [product_id];
+  // console.log('q: gSs: product_id ENTERED', product_id);
+  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id WHERE products.id = $1', stylesArgs
+  return pool.query('SELECT * FROM styles where product_id = $1', stylesArgs)
+  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1', stylesValues)
+  .then(styles => {
+    return styles.rows;
+  })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+};
 
 
 //getSkus for a style_id
