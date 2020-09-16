@@ -70,31 +70,54 @@ app.get('/productsdb/features/:id', (request, response) => {
 });
 
 app.get('/productsdb/styles/:id', (request, response) => {
-  let entryTime = new Date();
+  // let entryTime = new Date();
   // console.log('a:: gSs: ENTERED');
   pg.getStyles(request.params.id)
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    console.log(styles);
     response.send(styles);
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-  console.log('app duration to complete call [ms]: ', new Date() - entryTime, request.url);
+  // console.log('app duration to complete call [ms]: ', new Date() - entryTime, request.url);
   // .catch(error => console.error(error));
 });
 
-// // getOneProductStyle for a product_id
-// app.get('/productsdb/products/id/styles', (request, response) => {
-//   // console.log('a:: gOPS: ENTERED');
-//   pg.getOneProductStyle(request.params.id)
-//   .then((style) => {
-//     // console.log('a:: gOPS: r.rs: COMPLETED', style);
-//     response.send(style);
-//   })
-//   .catch(error => console.error(error));
-// });
+app.get('/products/:id/styles', (request, response) => {
+  pg.getStyles(request.params.id)
+  .then((styles) => {
+    // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
+    // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    for (let i = 0; i < styles.length; i++) {
+      styles[i].photos = ["photo1"];
+      styles[i].skus = {"XS": 8};
+    };
+    console.log(styles);
+    // for (let i = 0; i < styles.length; i++) {
+    //   // getPhotos for a style_id
+    //   app.get('/productsdb/photos/:id', (request, response) => {
+    //     // let entryTime = new Date();
+    //     // console.log('a:: gPhs: ENTERED');
+    //     pg.getPhotos(request.params.id)
+    //     .then((photos) => {
+    //       // console.log('a:: gPhs: r.rs: COMPLETED', photos);
+    //       // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    //       styles[request.params.id]
+    //       response.send(photos);
+    //     })
+    //     .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+    //     // .catch(error => console.error(error));
+    //   });
+    // }    
 
-// app.get('/productsdb/styles/:id', (request, response) => {
+    response.send(styles);
+  })
+  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+  // console.log('app duration to complete call [ms]: ', new Date() - entryTime, request.url);
+  // .catch(error => console.error(error));
+});
+
 //   // let entryTime = new Date();
 //   // console.log('a:: gSs: ENTERED');
 //   const stylesInfo = {
@@ -102,8 +125,15 @@ app.get('/productsdb/styles/:id', (request, response) => {
 //     results: []
 //   };
 
-//   const stylesObjs = {
-//     style_id: 
+//   const stylesObj = {
+//     id: styles.rows[styleCount].id,
+//     name: styles.rows[styleCount].name,
+//     original_price: styles.rows[styleCount].original_price,
+//     sale_price: styles.rows[styleCount].sale_price,
+//     default: styles.rows[styleCount].default,
+//     photos: [],
+//     skus: {}
+//   };
 
 //   pg.getStyles(request.params.id)
 //   .then((styles) => {
