@@ -89,11 +89,30 @@ app.get('/products/:id/styles', (request, response) => {
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    // console.log(styles);
     for (let i = 0; i < styles.length; i++) {
-      styles[i].photos = ["photo1"];
+      console.log('a: gSs: loop.i: ', i);
+      // getPhotos for a style_id
+      app.get('/productsdb/photos/:id', (request, response) => {
+        // let entryTime = new Date();
+        console.log('a:gSs: gPhs: ENTERED');
+        // pg.getPhotos(request.params.id)
+        let currentStyleId = i;
+        pg.getPhotos(currentStyleId)
+        .then((photos) => {
+          // console.log('a:: gPhs: r.rs: COMPLETED', photos);
+          // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+          console.log(photos);
+          response.send(photos);
+          styles[currentStyleId].photos = [photos];
+        })
+        .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+        // .catch(error => console.error(error));
+      });
+
       styles[i].skus = {"XS": 8};
     };
-    console.log(styles);
+    console.log('end: ', styles);
     // for (let i = 0; i < styles.length; i++) {
     //   // getPhotos for a style_id
     //   app.get('/productsdb/photos/:id', (request, response) => {
@@ -221,11 +240,13 @@ app.get('/productsdb/skus/:id', (request, response) => {
 // getPhotos for a style_id
 app.get('/productsdb/photos/:id', (request, response) => {
   // let entryTime = new Date();
-  // console.log('a:: gPhs: ENTERED');
+  console.log('a:: gPhs: ENTERED');
+  console.log('a:: gPhs: r.p.i: ', request.params.id);
   pg.getPhotos(request.params.id)
   .then((photos) => {
     // console.log('a:: gPhs: r.rs: COMPLETED', photos);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
+    console.log(photos.length);
     response.send(photos);
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
