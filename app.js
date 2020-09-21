@@ -85,7 +85,7 @@ app.get('/productsdb/styles/:id', (request, response) => {
 });
 
 app.get('/products/:id/styles', (request, response) => {
-  pg.getStyles(request.params.id)
+  pg.getStylesOld(request.params.id)
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
