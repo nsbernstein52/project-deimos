@@ -130,38 +130,62 @@ const getStyles = (product_id) => {
   return pool.query('SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs)
   .then(styles => {
         // console.log('q: gP: product.rows: ', product.rows);
-        const stylesInfo = {
+        const allStylesObjs = {
           product_id: product_id,
           results: [],
         };
-        var stylesObj = {};
+
+        // const allStylesObjs = {
+        //   product_id: product_id,
+        //   results: [{ eachStyle: { fooA, fooB, ..., photos: [], skews: {} }}],
+        //   results: [ { style_id, name, ..., photos: [], skews: {} }, {...}, {...} ],
+        // };
+        const stylesObj = {};
         const styleIdsArr = [];
         let styleCounter = 0;
         let photoCounter = 0;
         let skuCounter = 0;
 
+        // console.log('q: gSs: sLoopTop, s.r.l: ', styles.rows.length)
 
         for (let styleCount = 0; styleCount < styles.rows.length; styleCount++) {
-          stylesObj = {
-            style_id: styles.rows[styleCount].id,
-            name: styles.rows[styleCount].name,
-            original_price: styles.rows[styleCount].original_price,
-            sale_price: styles.rows[styleCount].sale_price,
-            default: styles.rows[styleCount].default,
-            photos: [],
-            skus: {},
-          }
+          // console.log('q: gSs: sLoopTop, sC: ', styleCount)
+          // const stylesObj = {
+            // style_id: styles.rows[styleCount].id,
+            // name: styles.rows[styleCount].name,
+            // original_price: styles.rows[styleCount].original_price,
+            // sale_price: styles.rows[styleCount].sale_price,
+            // default: styles.rows[styleCount].default,
+            // photos: [],
+            // skus: {},
+          // }
+          stylesObj.style_id = styles.rows[styleCount].id;
+          stylesObj.name = styles.rows[styleCount].name;
+          stylesObj.original_price = styles.rows[styleCount].original_price;
+          stylesObj.sale_price = styles.rows[styleCount].sale_price;
+          stylesObj.default = styles.rows[styleCount].default;
+          stylesObj.photos = [];
+          stylesObj.skus = {};
+        // console.log('q: gSs: sObj: ', stylesObj);
+          // allStyleObjs.foo =
+          // allStyleObjs[ 'foo' ] =
+          // allStyleObjs[ styleCount ] =
+          // allStyleObjs[ 0 ] =
+
+          // console.log('q: gSs: sCLoopMiddle: sIA, sO.s.id:', styleIdsArr, stylesObj.style_id);
           if (! styleIdsArr.includes(stylesObj.style_id)) {
             styleIdsArr.push(stylesObj.style_id);
             styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
             styleCounter++;
+            console.log('q: gSs: sCLoop: sCntr: ', styleCounter);
           };
           // console.log('q: gSs: s.r[0]: ', styles.rows[0])
           // console.log('q: gSs: s.r[1]: ', styles.rows[1])
 
           for (let styleCount2 = 0; styleCount2 < styleCounter; styleCount2++) {
 
-            const photosIdsArr = [];
+            // console.log('q: gSs: sCLoop: sC2, sCntr: ', styleCount2, styleCounter);
+            // const photosIdsArr = [];
           // for (let photoCounter = 0; photoCounter < styles.rows[styleCount].photos.length; photoCounter++) {
             let photoTempObj = {
               thumbnail_url: styles.rows[styleCount].thumbnail_url,
@@ -182,7 +206,7 @@ const getStyles = (product_id) => {
             }
 
           };
-          stylesInfo.results.push.stylesObj;
+          allStylesObjs.results.push(stylesObj);
           //   // console.log('q: gSs O:', styleObjs);
           //   stylesObj.photos.push(photoObjs);
           // }
@@ -196,21 +220,22 @@ const getStyles = (product_id) => {
           // }
         }
         console.log('q: gSs: s.r.length: ', styles.rows.length);
-        console.log('q: gSs: s.r[0]: ', styles.rows[0]);
-        console.log('q: gSs: s.r[0]: ', styles.rows[1]);
-        console.log('q: gSs: s.r[0]: ', styles.rows[2]);
-        console.log('q: gSs: s.r[0]: ', styles.rows[100]);
+        // console.log('q: gSs: s.r[0]: ', styles.rows[0]);
+        // console.log('q: gSs: s.r[0]: ', styles.rows[1]);
+        // console.log('q: gSs: s.r[0]: ', styles.rows[2]);
+        // console.log('q: gSs: s.r[0]: ', styles.rows[100]);
         // console.log('q: gSs: s.r[1]: ', styles.rows[1]);
-        console.log('q: gSs: s.r.length: ', styleIdsArr.length);
+        console.log('q: gSs: sIdsAr.length: ', styleIdsArr.length);
         console.log('q: gSs: UNIQUE sIds: ', styleIdsArrSorted);
-      // console.log('q: gP pI:', stylesInfo);
-        // return stylesInfo;
+      // console.log('q: gP pI:', allStylesObjs);
+        // return allStylesObjs;
     // console.log('q: gS r.rs:', styles.rows);
     // return styles.rows[0];
     // return styles.rows;
     console.log('query duration to complete call [ms]: ', new Date() - entryTime);
 
-    return stylesObj;
+    // return stylesObj;
+    return allStylesObjs.results[1];
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
