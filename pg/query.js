@@ -123,154 +123,163 @@ const getFeatures = (product_id) => {
 
 const getStyles = (product_id) => {
   let entryTime = new Date();
+  // console.log('q: gSs: product_id ENTERED', product_id);
+
+  // const allStylesForOneProduct = {
+  //   product_id: product_id,
+  //   results: [ /*forEachStyle*/ { id, name, o_p, s_default, photos: [], skus: {} }, {...}, {...} ],
+  // };
+  const allStylesForOneProduct = {
+    product_id: product_id,
+    results: [],
+  };
 
   let stylesArgs = [product_id];
-  // console.log('q: gSs: product_id ENTERED', product_id);
   // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs
   // return pool.query('SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs)
   return pool.query('SELECT * FROM styles where product_id = $1', stylesArgs)
   .then(styles => {
-        // console.log('q: gP: product.rows: ', product.rows);
-        // const allStylesForOneProduct = {
-        //   product_id: product_id,
-        //   results: [ /*forEachStyle*/ { id, name, o_p, s_default, photos: [], skus: {} }, {...}, {...} ],
-        // };
 
-        const allStylesForOneProduct = {
-          product_id: product_id,
-          results: [],
-        };
+    // const stylesRowsLength = styles.rows.length;
+    // console.log('q: gSs: sBeforeLoop, sRL: ', stylesRowsLength);
+    const styleObjs = {};
+    const styleIdsArr = [];
+    let stylesCounter = 0;
+    let photosCounter = 0;
+    let skusCounter = 0;
 
-        // const stylesRowsLength = styles.rows.length;
-        // console.log('q: gSs: sBeforeLoop, sRL: ', stylesRowsLength);
-        const styleObjs = {};
-        const styleIdsArr = [];
-        let stylesCounter = 0;
-        let photosCounter = 0;
-        let skusCounter = 0;
+    console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length)
 
-        console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length)
+    for (let stylesRowsCount = 0; stylesRowsCount < styles.rows.length; stylesRowsCount++) {
+      // console.log('q: gSs: sLoopTop, sC: ', stylesRowsCount)
+      let styleObj = {};
+      styleObj.style_id = styles.rows[stylesRowsCount].id;
+      styleObj.name = styles.rows[stylesRowsCount].name;
+      styleObj.original_price = styles.rows[stylesRowsCount].original_price;
+      styleObj.sale_price = styles.rows[stylesRowsCount].sale_price;
+      styleObj.default = styles.rows[stylesRowsCount].default;
+      styleObj.photos = [];
+      styleObj.skus = {};
+      // styleObj.photos = [];
+      // styleObj.skus = {};
 
-        for (let stylesRowsCount = 0; stylesRowsCount < styles.rows.length; stylesRowsCount++) {
-          // console.log('q: gSs: sLoopTop, sC: ', stylesRowsCount)
-          let styleObj = {};
-          styleObj.style_id = styles.rows[stylesRowsCount].id;
-          styleObj.name = styles.rows[stylesRowsCount].name;
-          styleObj.original_price = styles.rows[stylesRowsCount].original_price;
-          styleObj.sale_price = styles.rows[stylesRowsCount].sale_price;
-          styleObj.default = styles.rows[stylesRowsCount].default;
-          // styleObj.photos = [];
-          // styleObj.skus = {};
+      // console.log('q: gSs: sObj: ', styleObj);
+      // allStyleObjs.foo =
+      // allStyleObjs[ 'foo' ] =
+      // allStyleObjs[ stylesRowsCount ] =
+      // allStyleObjs[ 0 ] =
 
-          // console.log('q: gSs: sObj: ', styleObj);
-          // allStyleObjs.foo =
-          // allStyleObjs[ 'foo' ] =
-          // allStyleObjs[ stylesRowsCount ] =
-          // allStyleObjs[ 0 ] =
+      // console.log('q: gSs: sCLoopMiddle: sIA, sO.s.id:', styleIdsArr, styleObjs.style_id);
+      if (! styleIdsArr.includes(styleObj.style_id)) {
+        // if (styleIdsArr.includes(styleObj.style_id)) {
+        // } else {
+        styleIdsArr.push(styleObj.style_id);
+        // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
+        stylesCounter++;
+        allStylesForOneProduct.results.push(styleObj);
+        console.log('q: gSs: sCInLoop: sCntr: ', stylesCounter);
+      };
+      // console.log('q: gSs: s.r[0]: ', styles.rows[0])
+      // console.log('q: gSs: s.r[1]: ', styles.rows[1])
 
-          // console.log('q: gSs: sCLoopMiddle: sIA, sO.s.id:', styleIdsArr, styleObjs.style_id);
-          if (! styleIdsArr.includes(styleObj.style_id)) {
-          // if (styleIdsArr.includes(styleObj.style_id)) {
-          // } else {
-            styleIdsArr.push(styleObj.style_id);
-            // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
-            stylesCounter++;
-            allStylesForOneProduct.results.push(styleObj);
-            // console.log('q: gSs: sCInLoop: sCntr: ', stylesCounter);
-          };
-          // console.log('q: gSs: s.r[0]: ', styles.rows[0])
-          // console.log('q: gSs: s.r[1]: ', styles.rows[1])
-/*
-          for (let stylesRowsCount2 = 0; stylesRowsCount2 < stylesCounter; stylesRowsCount2++) {
+      // let photoArgs = styleIdsArr[stylesCounter] // styleId
+      let photoArgs = styleObj.style_id // styleId
+      // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
+      console.log('q: gSs: pArgs: ', photoArgs);
+      
+      // return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
+      // .then(photos => {
+      //   console.log('q: gSs:: p.q.Photos:', photos.rows);
+      //   // return photos.rows[0];
+      //   allStylesForOneProduct.results[stylesCounter].style_id.photos.push(photos);
+      //   // photosCounter++;
 
-            // console.log('q: gSs: sCLoop: sC2, sCntr: ', stylesCount2, stylesCounter);
-            // const photosIdsArr = [];
-          // for (let photosCounter = 0; photosCounter < styles.rows[stylesRowsCount].photos.length; photosCounter++) {
-            let photoTempObj = {
-              thumbnail_url: styles.rows[stylesRowsCount].thumbnail_url,
-              url: styles.rows[stylesRowsCount].url,
-            };
-            if (! styleObj.photos.includes(photoTempObj)) {
-              styleObj.photos.push(photoTempObj);
-              photosCounter++;
-            }
+      //   // return photos.rows;
+      // })
+    }
+    return allStylesForOneProduct;
+    console.log('query duration to complete call [ms]: ', new Date() - entryTime);
 
-            let skuTempObj = {
-              size: styles.rows[stylesRowsCount].size,
-              quantity: styles.rows[stylesRowsCount].quantity,
-            };
-            if (! styleObj.skus.hasOwnProperty(skuTempObj)) {
-              styleObj.skus = skuTempObj;
-              skusCounter++;
-            }
+  })
+  .catch((error) => { console.error('error from DB', error); }) // eslint-disable-line
+};
 
-          };
+  // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
+  // console.log('q: gSs: sIdsAr.length: ', styleIdsArr.length);
+  // console.log('q: gSs: UNIQUE sIds: ', styleIdsArrSorted[179]);
+  // console.log('q: gSs: afterLoop: UNIQUE sIdsArrS: ', styleIdsArrSorted);
+  // console.log('q: gSs: aSsFOP: ', allStylesForOneProduct);
+  // console.log('q: gSs: sCInLoop: sIdsArr: ', styleIdsArrSorted);
+  // console.log('q: gSs: s.r.length: ', styles.rows.length);
+
+    
+
+/*        
+  for (let stylesCount = 0; stylesCount < stylesCounter; stylesCount++) {
+
+      // console.log('q: gSs: sCLoop: sC2, sCntr: ', stylesCount2, stylesCounter);
+    // const photosIdsArr = [];
+    // for (let photosCounter = 0; photosCounter < styles.rows[stylesRowsCount].photos.length; photosCounter++) {
+      let photoObj = {
+        thumbnail_url: styles.rows[stylesRowsCount].thumbnail_url,
+        url: styles.rows[stylesRowsCount].url,
+      };
+      if (! styleObj.photos.includes(photoTempObj)) {
+        styleObj.photos.push(photoTempObj);
+        photosCounter++;
+      }
+
+      let skuTempObj = {
+        size: styles.rows[stylesRowsCount].size,
+        quantity: styles.rows[stylesRowsCount].quantity,
+      };
+      if (! styleObj.skus.hasOwnProperty(skuTempObj)) {
+        styleObj.skus = skuTempObj;
+        skusCounter++;
+      }
+
+    };
 */          
-          // allStylesForOneProduct.results.push(styleObj);
-          //   // console.log('q: gSs O:', styleObj);
-          //   styleObj.photos.push(photoObjs);
-          // }
+    // allStylesForOneProduct.results.push(styleObj);
+    //   // console.log('q: gSs O:', styleObj);
+    //   styleObj.photos.push(photoObjs);
+    // }
 
-          // for (let skusKey in styles.rows) { // photoCount = 0; photoCount < styles.rows.length; photoCount++) {
-          //   let skuObj = {
-          //     skusKey: styles.rows[skusKey].value
-          //   }
-          //       // console.log('q: gP fO:', styleObj);
-          //   styleObj.photos.push(photoObjs);
-          // }
-        }
-        styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
-        console.log('q: gSs: sIdsAr.length: ', styleIdsArr.length);
-        // console.log('q: gSs: UNIQUE sIds: ', styleIdsArrSorted[179]);
-        console.log('q: gSs: afterLoop: UNIQUE sIds: ', styleIdsArrSorted);
-        console.log('q: gSs: aSsFOP: ', allStylesForOneProduct);
-        // console.log('q: gSs: sCInLoop: sIdsArr: ', styleIdsArrSorted);
-        // console.log('q: gSs: s.r.length: ', styles.rows.length);
-        // console.log('q: gSs: s.r[0]: ', styles.rows[0]);
-        // console.log('q: gSs: s.r[0]: ', styles.rows[1]);
-        // console.log('q: gSs: s.r[0]: ', styles.rows[2]);
-        // console.log('q: gSs: s.r[0]: ', styles.rows[100]);
-        // console.log('q: gSs: s.r[1]: ', styles.rows[1]);
+    // for (let skusKey in styles.rows) { // photoCount = 0; photoCount < styles.rows.length; photoCount++) {
+    //   let skuObj = {
+    //     skusKey: styles.rows[skusKey].value
+    //   }
+    //       // console.log('q: gP fO:', styleObj);
+    //   styleObj.photos.push(photoObjs);
+    // }
 
-        // for (let styleCount = 0; styleCount < styleIdsArr.length; styleCount++) {
-        //   let styleId = styleIdsArrSorted[styleCount];
-        //   let photoArgs = styleIdsArrSorted[styleCount]
-          
-        //   return pool.query('SELECT * FROM photos where style_id = styleId', photoValues)
-        //   .then(photos => {
-        //     // console.log('q: gPhs r.rs:', photos.rows);
-        //     // return photos.rows[0];
-        //     return photos.rows;
-        //   })
-        //   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-
-        //   for (let photosCounter = 0; photosCounter < styles.rows[stylesRowsCount].photos.length; photosCounter++) {
-        //     let photoTempObj = {
-        //       thumbnail_url: styles.rows[stylesRowsCount].thumbnail_url,
-        //       url: styles.rows[stylesRowsCount].url,
-        //     };
-        //     if (! styleObj.photos.includes(photoTempObj)) {
-        //       styleObj.photos.push(photoTempObj);
-        //       photosCounter++;
-        //     }
-        //   }
-        // }
-        
+    //   for (let photosCounter = 0; photosCounter < styles.rows[stylesRowsCount].photos.length; photosCounter++) {
+    //     let photoTempObj = {
+    //       thumbnail_url: styles.rows[stylesRowsCount].thumbnail_url,
+    //       url: styles.rows[stylesRowsCount].url,
+    //     };
+    //     if (! styleObj.photos.includes(photoTempObj)) {
+    //       styleObj.photos.push(photoTempObj);
+    //       photosCounter++;
+    //     }
+    //   }
+    // }
+    
         
       // console.log('q: gP pI:', allStylesForOneProduct);
         // return allStylesForOneProduct;
     // console.log('q: gS r.rs:', styles.rows);
     // return styles.rows[0];
     // return styles.rows;
-    console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+    // console.log('query duration to complete call [ms]: ', new Date() - entryTime);
 
     // return styleObj;
     // return allStylesForOneProduct.results[1];
     // return allStylesForOneProduct.results[179];
-    return allStylesForOneProduct.results;
-  })
-  .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-};
+//     return allStylesForOneProduct.results;
+//   })
+//   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
+// };
 
 
 const getStylesOld = (product_id) => {
