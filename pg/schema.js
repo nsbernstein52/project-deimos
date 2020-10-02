@@ -62,7 +62,19 @@ SELECT * FROM styles where products_id = $1;
 for style ids:
 SELECT * FROM skus where styles_id = $1;
 SELECT * FROM photos where styles_id = $1;
-SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1
+SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = 1;
+SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = 1 AND id = 1;
+
+SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1;
+
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id, styles.id AS style_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1;
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1 AND id = 1;
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id, styles.id AS style_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1 AND styles.id = 1;
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id, styles.id AS style_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE product_id = 1 AND style_id = 1;
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id, styles.id AS style_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE product_id = 1 AND style_id = 1 AND photos.id = 1 AND skus.id = 1;
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id, styles.id AS style_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1 AND styles.id = 1 AND photos.id = 1 AND skus.id = 1;
+SELECT *, products.id AS product_id, skus.id AS sku_id, photos.id AS photo_id, styles.id AS style_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1 AND styles.id = 2 AND photos.id = 1 AND skus.id = 1;
+SELECT *, products.id AS product_id, styles.id AS style_id, photos.id AS photo_id, skus.id AS sku_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = 1 AND styles.id = 1 AND photos.id = 1 AND skus.id = 1;
 
 COPY products FROM '/Users/nsb52/sdc/data30/products-30.csv' HEADER csv;
 COPY features FROM '/Users/nsb52/sdc/data30/features-30.csv' HEADER csv;
