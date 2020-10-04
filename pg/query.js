@@ -183,6 +183,8 @@ const getStyles = (product_id) => {
       styleObj.photos.push({"url": "pURL_" + stylesCounter}, {"thumbnail_url": "pThumb_" + stylesCounter});
       // allStylesForOneProduct.results[stylesCounter-1].photos.push("p" + stylesCounter);
       // console.log('q: gSs: s.r[1]: ', styles.rows[1])
+      // let skuKey = "sku" + stylesCounter;
+      styleObj.skus = {"skuKey0": "sku_" + stylesCounter + "_0", "skuKey_1": "sku_" + stylesCounter + "_1"};
 
 
       // let photoArgs = styleIdsArr[stylesCounter] // styleId
