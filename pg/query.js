@@ -180,7 +180,7 @@ const getStyles = (product_id) => {
         // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
         // console.log('q: gSs: sIdsArr: sCInLoop: ', styleIdsArr)
       };
-      styleObj.photos.push("p" + stylesCounter);
+      styleObj.photos.push({"url": "pURL_" + stylesCounter}, {"thumbnail_url": "pThumb_" + stylesCounter});
       // allStylesForOneProduct.results[stylesCounter-1].photos.push("p" + stylesCounter);
       // console.log('q: gSs: s.r[1]: ', styles.rows[1])
 
