@@ -170,27 +170,26 @@ const getStyles = (product_id) => {
       // allStyleObjs[ 0 ] =
 
       // console.log('q: gSs: sCLoopMiddle: sIA, sO.s.id:', styleIdsArr, styleObjs.style_id);
-      if (! styleIdsArr.includes(styleObj.style_id)) {
+      // if (! styleIdsArr.includes(styleObj.style_id)) {
         // if (styleIdsArr.includes(styleObj.style_id)) {
         // } else {
         styleIdsArr.push(styleObj.style_id);
         // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
         stylesCounter++;
-        allStylesForOneProduct.results.push(styleObj);
+        // allStylesForOneProduct.results.push(styleObj);
         // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
         // console.log('q: gSs: sIdsArr: sCInLoop: ', styleIdsArr)
-      };
+      // };
       styleObj.photos.push({"url": "pURL_" + stylesCounter}, {"thumbnail_url": "pThumb_" + stylesCounter});
       // allStylesForOneProduct.results[stylesCounter-1].photos.push("p" + stylesCounter);
       // console.log('q: gSs: s.r[1]: ', styles.rows[1])
       // let skuKey = "sku" + stylesCounter;
       styleObj.skus = {"skuKey0": "sku_" + stylesCounter + "_0", "skuKey_1": "sku_" + stylesCounter + "_1"};
 
-
       // let photoArgs = styleIdsArr[stylesCounter] // styleId
       // let photoArgs = []; // styleId
-      let photoArgs = [stylesCounter] // styleId
-      // console.log('q: gSs: pArgs: ', photoArgs);
+      let photoArgs = [stylesCounter]; // styleId
+      console.log('q: gSs: pArgs: ', photoArgs);
       // photoArgs.push(styleObj.style_id); // styleId
       // // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
       
@@ -198,15 +197,18 @@ const getStyles = (product_id) => {
       // .then(photos => {
       //   console.log('q: gSs:: p.q.Photos:', photos.rows);
       // //   // return photos.rows[0];
-      //   styleObj.photos.push(photos);
-      //   // allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
+      //   // styleObj.photos.push(photos);
+      //   allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
       //   // photosCounter++;
 
       // //   // return photos.rows;
       // })
+      allStylesForOneProduct.results.push(styleObj);
+
     }
     console.log('q: gSs: sIdsArr: NearEnd: ', styleIdsArr)
     console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+    // console.log('q: aSFOP: atEnd', allStylesForOneProduct)
     return allStylesForOneProduct;
 
   })
