@@ -177,28 +177,35 @@ const getStyles = (product_id) => {
         // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
         stylesCounter++;
         allStylesForOneProduct.results.push(styleObj);
-        console.log('q: gSs: sCInLoop: sCntr: ', stylesCounter);
+        // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
+        // console.log('q: gSs: sIdsArr: sCInLoop: ', styleIdsArr)
       };
-      // console.log('q: gSs: s.r[0]: ', styles.rows[0])
+      styleObj.photos.push("p" + stylesCounter);
+      // allStylesForOneProduct.results[stylesCounter-1].photos.push("p" + stylesCounter);
       // console.log('q: gSs: s.r[1]: ', styles.rows[1])
 
+
       // let photoArgs = styleIdsArr[stylesCounter] // styleId
-      let photoArgs = styleObj.style_id // styleId
-      // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
-      console.log('q: gSs: pArgs: ', photoArgs);
+      // let photoArgs = []; // styleId
+      let photoArgs = [stylesCounter] // styleId
+      // console.log('q: gSs: pArgs: ', photoArgs);
+      // photoArgs.push(styleObj.style_id); // styleId
+      // // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
       
       // return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
       // .then(photos => {
       //   console.log('q: gSs:: p.q.Photos:', photos.rows);
-      //   // return photos.rows[0];
-      //   allStylesForOneProduct.results[stylesCounter].style_id.photos.push(photos);
+      // //   // return photos.rows[0];
+      //   styleObj.photos.push(photos);
+      //   // allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
       //   // photosCounter++;
 
-      //   // return photos.rows;
+      // //   // return photos.rows;
       // })
     }
-    return allStylesForOneProduct;
+    console.log('q: gSs: sIdsArr: NearEnd: ', styleIdsArr)
     console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+    return allStylesForOneProduct;
 
   })
   .catch((error) => { console.error('error from DB', error); }) // eslint-disable-line
