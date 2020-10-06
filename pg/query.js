@@ -150,6 +150,7 @@ const getStyles = (product_id) => {
 
     console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length)
 
+
     for (let stylesRowsCount = 0; stylesRowsCount < styles.rows.length; stylesRowsCount++) {
       // console.log('q: gSs: sLoopTop, sC: ', stylesRowsCount)
       let styleObj = {};
@@ -157,7 +158,7 @@ const getStyles = (product_id) => {
       styleObj.name = styles.rows[stylesRowsCount].name;
       styleObj.original_price = styles.rows[stylesRowsCount].original_price;
       styleObj.sale_price = styles.rows[stylesRowsCount].sale_price;
-      styleObj.default = styles.rows[stylesRowsCount].default;
+      styleObj["default?"] = styles.rows[stylesRowsCount].default_style;
       styleObj.photos = [];
       styleObj.skus = {};
       // styleObj.photos = [];
@@ -180,7 +181,11 @@ const getStyles = (product_id) => {
         // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
         // console.log('q: gSs: sIdsArr: sCInLoop: ', styleIdsArr)
       // };
-      styleObj.photos.push({"url": "pURL_" + stylesCounter}, {"thumbnail_url": "pThumb_" + stylesCounter});
+
+      
+
+      // styleObj.photos.push({"url": "pURL_" + stylesCounter, "thumbnail_url": "pThumb_" + stylesCounter});
+
       // allStylesForOneProduct.results[stylesCounter-1].photos.push("p" + stylesCounter);
       // console.log('q: gSs: s.r[1]: ', styles.rows[1])
       // let skuKey = "sku" + stylesCounter;
@@ -192,23 +197,27 @@ const getStyles = (product_id) => {
       console.log('q: gSs: pArgs: ', photoArgs);
       // photoArgs.push(styleObj.style_id); // styleId
       // // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
-      
-      // return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
-      // .then(photos => {
-      //   console.log('q: gSs:: p.q.Photos:', photos.rows);
-      // //   // return photos.rows[0];
-      //   // styleObj.photos.push(photos);
-      //   allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
-      //   // photosCounter++;
 
-      // //   // return photos.rows;
-      // })
-      allStylesForOneProduct.results.push(styleObj);
+      return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
+      .then(photos => {
+        console.log('q: gSs:: p.q.Photos:', photos.rows);
+      //   // return photos.rows[0];
+        styleObj.photos.push(photos);
+        // allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
+        // allStylesForOneProduct.results[0].photos.push(photos);
+        // photosCounter++;
+
+      //   // return photos.rows;
+      })
+      // allStylesForOneProduct.results.push(styleObj);
 
     }
+
+    // PromiseAll      
+
     console.log('q: gSs: sIdsArr: NearEnd: ', styleIdsArr)
     console.log('query duration to complete call [ms]: ', new Date() - entryTime);
-    // console.log('q: aSFOP: atEnd', allStylesForOneProduct)
+    console.log('q: aSFOP: atEnd', JSON.stringify(allStylesForOneProduct, null, 2))
     return allStylesForOneProduct;
 
   })
