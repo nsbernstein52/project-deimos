@@ -26,7 +26,7 @@ CREATE TABLE styles (
   name TEXT,
   sale_price INT,
   original_price INT,
-  default_style INT DEFAULT 0
+  default_style BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE photos (
