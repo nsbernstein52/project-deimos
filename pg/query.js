@@ -121,7 +121,7 @@ const getFeatures = (product_id) => {
 
 // getAllStyleInfo(99);
 
-const getStyles = (product_id) => {
+const getStyles = (product_id, printASFOP) => {
   let entryTime = new Date();
   // console.log('q: gSs: product_id ENTERED', product_id);
 
@@ -129,16 +129,23 @@ const getStyles = (product_id) => {
   //   product_id: product_id,
   //   results: [ /*forEachStyle*/ { id, name, o_p, s_default, photos: [], skus: {} }, {...}, {...} ],
   // };
+
   const allStylesForOneProduct = {
     product_id: product_id,
     results: [],
   };
+
+  // const printASFOP = function(obj) {
+  //   obj.foo = ['foo-foo'];
+  //   console.log('q: printFoo: ', obj);
+  // }
 
   let stylesArgs = [product_id];
   // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs
   // return pool.query('SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs)
   return pool.query('SELECT * FROM styles where product_id = $1', stylesArgs)
   .then(styles => {
+    // printASFOP(allStylesForOneProduct);
 
     // const stylesRowsLength = styles.rows.length;
     // console.log('q: gSs: sBeforeLoop, sRL: ', stylesRowsLength);
@@ -149,6 +156,8 @@ const getStyles = (product_id) => {
     let skusCounter = 0;
 
     console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length)
+
+    const promiseArr = [];
 
 
     for (let stylesRowsCount = 0; stylesRowsCount < styles.rows.length; stylesRowsCount++) {
@@ -174,6 +183,7 @@ const getStyles = (product_id) => {
       // if (! styleIdsArr.includes(styleObj.style_id)) {
         // if (styleIdsArr.includes(styleObj.style_id)) {
         // } else {
+
         styleIdsArr.push(styleObj.style_id);
         // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
         stylesCounter++;
@@ -182,7 +192,19 @@ const getStyles = (product_id) => {
         // console.log('q: gSs: sIdsArr: sCInLoop: ', styleIdsArr)
       // };
 
-      
+      // collect N photo promises for the N styles pushed into an array
+      // AFTER finishing the for loop, pass promiseArr to Promise.all
+
+      // Promise.all( [getPhotos(style_id), getSkus(style_id)] ) 
+        // returns a single promise
+        // it settles (completes) when all its argument promises settle
+        // it resolves (fulfilled) if all of the promises resolve
+      //   .then( getPhotosResults, getSkusResults ) => {}
+      //   
+      // 
+
+
+
 
       // styleObj.photos.push({"url": "pURL_" + stylesCounter, "thumbnail_url": "pThumb_" + stylesCounter});
 
@@ -194,31 +216,61 @@ const getStyles = (product_id) => {
       // let photoArgs = styleIdsArr[stylesCounter] // styleId
       // let photoArgs = []; // styleId
       let photoArgs = [stylesCounter]; // styleId
-      console.log('q: gSs: pArgs: ', photoArgs);
+      // console.log('q: gSs: pArgs: ', photoArgs);g
       // photoArgs.push(styleObj.style_id); // styleId
       // // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
 
-      return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
-      .then(photos => {
-        console.log('q: gSs:: p.q.Photos:', photos.rows);
-      //   // return photos.rows[0];
-        styleObj.photos.push(photos);
-        // allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
-        // allStylesForOneProduct.results[0].photos.push(photos);
-        // photosCounter++;
+      // let photoPromise = current_query
+      // promiseArr.push(photoPromise)
 
-      //   // return photos.rows;
-      })
+      // const printASFOP = function(obj, result) {
+      //   // obj.foo = ['foo-foo'];
+      //   obj.foo = result.rows[0];
+      //   console.log('q: printFoo: ', obj);
+      // }
+
+
+      let photoPromise = pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
+      .then(photos => {
+        // let photoRows = photos.rows[0]; //get rid of [0]
+        // styleObj.photos.push(photos.rows);
+        styleObj.photos = photos.rows;
+        // console.log('q: gSs: p.rows: ', photos.rows); // [ {..}, {..}]
+        console.log('q: gSs: sO.photos: ', styleObj.photos);
+
+      // .then(blah => {
+        //tylesForOneProduct, blah);
+        // printASFOP(blah); console.log('q: pP: blah: ', blah);
+        // printASFOP(allS
+      });
+      
+      promiseArr.push(photoPromise);
+
+      // return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
+      // .then(photos => {
+      //   console.log('q: gSs:: p.q.Photos:', photos.rows);
+      // //   // return photos.rows[0];
+      //   styleObj.photos.push(photos);
+      //   // allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
+      //   // allStylesForOneProduct.results[0].photos.push(photos);
+      //   // photosCounter++;
+
+      // //   // return photos.rows;
+      // })
       // allStylesForOneProduct.results.push(styleObj);
 
     }
 
-    // PromiseAll      
+    // Promise.
+    const allStylesPromise = Promise.all(promiseArr);
 
     console.log('q: gSs: sIdsArr: NearEnd: ', styleIdsArr)
     console.log('query duration to complete call [ms]: ', new Date() - entryTime);
     console.log('q: aSFOP: atEnd', JSON.stringify(allStylesForOneProduct, null, 2))
-    return allStylesForOneProduct;
+    // defer until all for loop promises have completed
+    // assumes that each cycle on the for loop creates a promise
+    // 
+    return allStylesForOneProduct; 
 
   })
   .catch((error) => { console.error('error from DB', error); }) // eslint-disable-line
