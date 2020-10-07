@@ -72,7 +72,15 @@ app.get('/productsdb/features/:id', (request, response) => {
 app.get('/productsdb/styles/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gSs: ENTERED');
+  
+  // function in app to be passed to query
+  // const printASFOP = function(obj) {
+  //   obj.foo = ['foo-foo'];
+  //   console.log('a: printFoo: ', obj);
+  // }
+
   pg.getStyles(request.params.id)
+  // pg.getStyles(request.params.id, printASFOP)
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
