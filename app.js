@@ -79,7 +79,7 @@ app.get('/productsdb/styles/:id', (request, response) => {
   //   console.log('a: printFoo: ', obj);
   // }
 
-  pg.getStyles(request.params.id)
+  pg.getStyles(request.params.id) // promise A, .then callback waits until promise B resolves and A.then resolves with B's resolved value
   // pg.getStyles(request.params.id, printASFOP)
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
