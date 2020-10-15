@@ -32,7 +32,8 @@ app.get('/', (request, response) => {
 
 // CRUD
 
-app.get('/productsdb/', (request, response) => {
+// app.get('/productsdb/', (request, response) => {
+app.get('/products/list', (request, response) => {
   // console.log('a:: gAPs: ENTERED');
   pg.getAllProducts()
   .then((products) => {
@@ -42,7 +43,8 @@ app.get('/productsdb/', (request, response) => {
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 });
 
-app.get('/productsdb/products/:id', (request, response) => {
+// app.get('/productsdb/products/:id', (request, response) => {
+app.get('/products/:id', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gP: ENTERED: request.url: ', request.url);
   // console.log('a:: gP: ENTERED');
@@ -56,7 +58,8 @@ app.get('/productsdb/products/:id', (request, response) => {
   // .catch(error => console.error(error));
 });
 
-app.get('/productsdb/features/:id', (request, response) => {
+// app.get('/productsdb/features/:id', (request, response) => {
+app.get('/products/:id/features', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gFs: ENTERED');
   pg.getFeatures(request.params.id)
@@ -69,7 +72,8 @@ app.get('/productsdb/features/:id', (request, response) => {
   // .catch(error => console.error(error));
 });
 
-app.get('/productsdb/styles/:id', (request, response) => {
+// app.get('/productsdb/styles/:id', (request, response) => { // get ONLY style info
+app.get('/products/:id/styles', (request, response) => { // get ONLY style info
   // let entryTime = new Date();
   // console.log('a:: gSs: ENTERED');
   
@@ -93,7 +97,7 @@ app.get('/productsdb/styles/:id', (request, response) => {
 });
 
 app.get('/products/:id/styles', (request, response) => {
-  pg.getStylesOld(request.params.id)
+  pg.getOnlyStyle(request.params.id)
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
@@ -145,94 +149,9 @@ app.get('/products/:id/styles', (request, response) => {
   // .catch(error => console.error(error));
 });
 
-//   // let entryTime = new Date();
-//   // console.log('a:: gSs: ENTERED');
-//   const stylesInfo = {
-//     product_id: request.params.id,
-//     results: []
-//   };
-
-//   const stylesObj = {
-//     id: styles.rows[styleCount].id,
-//     name: styles.rows[styleCount].name,
-//     original_price: styles.rows[styleCount].original_price,
-//     sale_price: styles.rows[styleCount].sale_price,
-//     default: styles.rows[styleCount].default,
-//     photos: [],
-//     skus: {}
-//   };
-
-//   pg.getStyles(request.params.id)
-//   .then((styles) => {
-//     // console.log('a:: gSs: r.rs: COMPLETED', styles);
-//     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
-//     // console.log(styles);
-
-//     // iterate over styles
-//     for (let i = 0; i < styles.length; i++) {
-
-//       pg.getPhotos(styles[i].id)
-//       .then((photos) => {
-//         // // console.log('a:: gPhs: r.rs: COMPLETED', photos);
-//         // // console.log('duration to complete call: ', new Date() - entryTime, request.url);
-//         response.send(photos);
-//       })
-//       .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-
-//       pg.getSkus(styles[i].id)
-
-//     }
-
-// ////    response.send(styles);
-//   })
-//   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-//   // .catch(error => console.error(error));
-// });
-
-// app.get('products/:product_id/styles', (request, response) => {
-//   // let entryTime = new Date();
-//   // console.log('a:: gSs: ENTERED');
-//   pg.getStyles(request.params.id)
-//   .then((styles) => {
-//     // console.log('a:: gSs: r.rs: COMPLETED', styles);
-//     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
-
-//     response.send(styles);
-//   })
-//   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-//   // .catch(error => console.error(error));
-// });
-
-// async function getStyles(request.params.id){
-//     .then
- 
-//     pg.styles.
-//     let  = await doJob(1,1);
-//     let result2 = await doJob(2,2);
-//     let result3 = await doJob(3,3);
-     
-//     let finalResult = result1+result2+result3;
-//     console.log(finalResult);
-//     return finalResult;
-     
-//     }
-     
-//     getStyles();
-
-  // async 
-    // create object
-    // populate object with product_id
-    // create resultsArr
-    // iterate and, for each style, populate resultsArr with 
-    //   styleInfo
-    //   array of photosInfo
-    //   skusObj
-//     pg.getStyles(request.params.id)
-//   .
-// }
-
 // getSkus for a style_id
-app.get('/productsdb/skus/:id', (request, response) => {
+// app.get('/productsdb/skus/:id', (request, response) => {
+app.get('/products/:id/skus', (request, response) => {
   // let entryTime = new Date();
   // console.log('a:: gSks: ENTERED');
   pg.getSkus(request.params.id)
@@ -246,7 +165,8 @@ app.get('/productsdb/skus/:id', (request, response) => {
 });
 
 // getPhotos for a style_id
-app.get('/productsdb/photos/:id', (request, response) => {
+// app.get('/productsdb/photos/:id', (request, response) => {
+app.get('/products/:id/photos', (request, response) => {
   // let entryTime = new Date();
   console.log('a:: gPhs: ENTERED');
   console.log('a:: gPhs: r.p.i: ', request.params.id);
@@ -254,7 +174,7 @@ app.get('/productsdb/photos/:id', (request, response) => {
   .then((photos) => {
     // console.log('a:: gPhs: r.rs: COMPLETED', photos);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
-    console.log(photos.length);
+    // console.log(photos.length);
     response.send(photos);
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
