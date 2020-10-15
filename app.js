@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 let entryTime = new Date();
-console.log('a.js: ENTERING');
+console.log('a: ENTERING at: ', new Date().toLocaleTimeString());
 
 // QQQ
 app.get('/', (request, response) => {
@@ -168,8 +168,8 @@ app.get('/products/:id/skus', (request, response) => {
 // app.get('/productsdb/photos/:id', (request, response) => {
 app.get('/products/:id/photos', (request, response) => {
   // let entryTime = new Date();
-  console.log('a:: gPhs: ENTERED');
-  console.log('a:: gPhs: r.p.i: ', request.params.id);
+  // console.log('a:: gPhs: ENTERED');
+  // console.log('a:: gPhs: r.p.i: ', request.params.id);
   pg.getPhotos(request.params.id)
   .then((photos) => {
     // console.log('a:: gPhs: r.rs: COMPLETED', photos);
@@ -181,10 +181,6 @@ app.get('/products/:id/photos', (request, response) => {
   // .catch(error => console.error(error));
 });
 
-console.log('a:: LEAVING');
-
-// app.listen(PORT, () => {
-//   console.log(`Web server running on: http://localhost:${PORT}`, new Date());
-// });
+console.log('a:: LEAVING at: ', new Date().toLocaleTimeString());
 
 module.exports = app;
