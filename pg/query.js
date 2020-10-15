@@ -136,19 +136,17 @@ const getStyles = (product_id, printASFOP) => {
       styleObj.original_price = styles.rows[stylesRowsCount].original_price;
       styleObj.sale_price = styles.rows[stylesRowsCount].sale_price;
       styleObj["default?"] = styles.rows[stylesRowsCount].default_style;
-      styleObj.photos = [];
-      styleObj.skus = {};
+      // styleObj.photos = [];
+      // styleObj.skus = {};
       // console.log('q: gSs: sObj: ', styleObj);
 
-        stylesCounter++;
-        // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
-        allStylesForOneProduct.results.push(styleObj);
+      stylesCounter++;
+      // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
+      allStylesForOneProduct.results.push(styleObj);
 
-      // let photoArgs = []; // styleId
-      // console.log('q: gSs: pArgs: ', photoArgs);g
-      // photoArgs.push(styleObj.style_id); // styleId
-
+//  /*
       let photoArgs = [stylesCounter]; // styleId
+      // console.log('q: gSs: pArgs: ', photoArgs);g
       let photoPromise = pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
       .then(photos => {
         // let photoRows = photos.rows[0]; //get rid of [0]
@@ -156,25 +154,32 @@ const getStyles = (product_id, printASFOP) => {
         styleObj.photos = photos.rows;
         // console.log('q: gSs: p.rows: ', photos.rows); // [ {..}, {..}]
         // console.log('q: gSs: sO.photos: ', styleObj.photos);
+        // promiseArr.push(photoPromise);
       });
+      promiseArr.push(photoPromise);
+
       
       let skuArgs = [stylesCounter]; // styleId
       let skuPromise = pool.query('SELECT * FROM skus where style_id = $1', skuArgs)
       .then(skus => {
-        styleObj.skus = skus.rows[0];
-        promiseArr.push(photoPromise, skuPromise);
+        styleObj.skus = skus.rows;
       });
+      promiseArr.push(skuPromise);
 
-      const allStylesPromise = Promise.all(promiseArr)
-      .then( () => {
-        // console.log('q: gSs: allStylesPromise: aSFOP: ', allStylesForOneProduct);
-        // return 10;
-        return allStylesForOneProduct;
-      }); 
-      console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+// */
       // console.log('q: aSFOP: atEnd', JSON.stringify(allStylesForOneProduct, null, 2))
-      return allStylesPromise;
+      // return allStylesForOneProduct;
     }
+    const allStylesPromise = Promise.all(promiseArr)
+    .then( () => {
+      // console.log('q: gSs: allStylesPromise: aSFOP: ', allStylesForOneProduct);
+      // return 10;
+      return allStylesForOneProduct;
+    }); 
+
+    console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+    // return allStylesForOneProduct;
+    return allStylesPromise;
   })
   .catch((error) => { console.error('error from DB', error); }) // eslint-disable-line
 };
