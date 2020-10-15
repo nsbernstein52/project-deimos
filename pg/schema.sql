@@ -1,5 +1,5 @@
-// DROP DATABASE IF EXISTS productsdb;
-// CREATE DATABASE productsdb;
+DROP DATABASE IF EXISTS productsdb30;
+CREATE DATABASE productsdb30;
 \c productsdb30;
 
 
@@ -26,7 +26,7 @@ CREATE TABLE styles (
   name TEXT,
   sale_price INT,
   original_price INT,
-  default_style BOOLEAN DEFAULT FALSE
+  default_style INT DEFAULT 0
 );
 
 CREATE TABLE photos (
