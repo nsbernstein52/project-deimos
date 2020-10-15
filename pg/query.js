@@ -151,8 +151,18 @@ const getStyles = (product_id, printASFOP) => {
       .then(photos => {
         // let photoRows = photos.rows[0]; //get rid of [0]
         // styleObj.photos.push(photos.rows);
-        styleObj.photos = photos.rows;
-        // console.log('q: gSs: p.rows: ', photos.rows); // [ {..}, {..}]
+        // let photoProps = {}
+        // console.log('q: gSs: p.rows[sC].url, p.rows[sC].thmbnlUrl: ', photos.rows[stylesCounter].url, photos.rows[stylesCounter].thumbnail_url); // [ {..}, {..}]
+        let photoArr =[];
+        // let photoItem = {};
+        for (photoCounter = 0; photoCounter < photos.rows.length; photoCounter++) {
+          let url = photos.rows[photoCounter].url;
+          let thumbnail_url = photos.rows[photoCounter].thumbnail_url;
+          let photoItem = {url, thumbnail_url};
+          photoArr.push(photoItem)
+        }
+        styleObj.photos = photoArr
+        // styleObj.photos = photos.rows;
         // console.log('q: gSs: sO.photos: ', styleObj.photos);
         // promiseArr.push(photoPromise);
       });
