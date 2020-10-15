@@ -89,10 +89,10 @@ const getProduct = (id) => {
 };
 
 /*
-const getProduct = (id) => {
-  let productValues = [id];
+const getOnlyProduct = (id) => {
+  let productArgs = [id];
   // console.log('q: gP: id ENTERED', id);
-  return pool.query('SELECT * FROM products WHERE products.id = $1', productValues)
+  return pool.query('SELECT * FROM products WHERE products.id = $1', productArgs)
   .then(product => {
     // console.log('q: gP: product.rows: ', product.rows);
     return product.rows;
@@ -112,59 +112,21 @@ const getFeatures = (product_id) => {
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
 };
 
-// const getAllStyleInfo = (id) => {
-//   Promise.all([getStyles(id), getSkus(id), getPhotos(id)])
-//     .then((values) => {
-//     console.log(values);
-//   });
-// }
-
-// getAllStyleInfo(99);
-
 const getStyles = (product_id, printASFOP) => {
   let entryTime = new Date();
   // console.log('q: gSs: product_id ENTERED', product_id);
-
-  // const allStylesForOneProduct = {
-  //   product_id: product_id,
-  //   results: [ /*forEachStyle*/ { id, name, o_p, s_default, photos: [], skus: {} }, {...}, {...} ],
-  // };
 
   const allStylesForOneProduct = {
     product_id: product_id,
     results: [],
   };
 
-  // const printASFOP = function(obj) {
-  //   obj.foo = ['foo-foo'];
-  //   console.log('q: printFoo: ', obj);
-  // }
-
   let stylesArgs = [product_id];
-  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs
-  // return pool.query('SELECT *, products.id AS id, skus.id AS sku_id, photos.id AS photo_id FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id WHERE products.id = $1', stylesArgs)
   return pool.query('SELECT * FROM styles where product_id = $1', stylesArgs)
   .then(styles => {
-    // printASFOP(allStylesForOneProduct);
-    // return 10; // transformed the resolved value to be 10;
-    
-    // return promise that resolves to 10 // "resolve" is bananas
-    // return new Promise( (resolve) => {
-    //   resolve(10);
-    // })
-
-    // const stylesRowsLength = styles.rows.length;
-    // console.log('q: gSs: sBeforeLoop, sRL: ', stylesRowsLength);
-    const styleObjs = {};
-    const styleIdsArr = [];
-    let stylesCounter = 0;
-    let photosCounter = 0;
-    let skusCounter = 0;
-
     console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length)
-
+    let stylesCounter = 0;
     const promiseArr = [];
-
 
     for (let stylesRowsCount = 0; stylesRowsCount < styles.rows.length; stylesRowsCount++) {
       // console.log('q: gSs: sLoopTop, sC: ', stylesRowsCount)
@@ -176,66 +138,17 @@ const getStyles = (product_id, printASFOP) => {
       styleObj["default?"] = styles.rows[stylesRowsCount].default_style;
       styleObj.photos = [];
       styleObj.skus = {};
-      // styleObj.photos = [];
-      // styleObj.skus = {};
-
       // console.log('q: gSs: sObj: ', styleObj);
-      // allStyleObjs.foo =
-      // allStyleObjs[ 'foo' ] =
-      // allStyleObjs[ stylesRowsCount ] =
-      // allStyleObjs[ 0 ] =
 
-      // console.log('q: gSs: sCLoopMiddle: sIA, sO.s.id:', styleIdsArr, styleObjs.style_id);
-      // if (! styleIdsArr.includes(styleObj.style_id)) {
-        // if (styleIdsArr.includes(styleObj.style_id)) {
-        // } else {
-
-        styleIdsArr.push(styleObj.style_id);
-        // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
         stylesCounter++;
-        allStylesForOneProduct.results.push(styleObj);
         // console.log('q: gSs: sCntr: sCInLoop: ', stylesCounter);
-        // console.log('q: gSs: sIdsArr: sCInLoop: ', styleIdsArr)
-      // };
+        allStylesForOneProduct.results.push(styleObj);
 
-      // collect N photo promises for the N styles pushed into an array
-      // AFTER finishing the for loop, pass promiseArr to Promise.all
-
-      // Promise.all( [getPhotos(style_id), getSkus(style_id)] ) 
-        // returns a single promise
-        // it settles (completes) when all its argument promises settle
-        // it resolves (fulfilled) if all of the promises resolve
-      //   .then( getPhotosResults, getSkusResults ) => {}
-      //   
-      // 
-
-
-
-
-      // styleObj.photos.push({"url": "pURL_" + stylesCounter, "thumbnail_url": "pThumb_" + stylesCounter});
-
-      // allStylesForOneProduct.results[stylesCounter-1].photos.push("p" + stylesCounter);
-      // console.log('q: gSs: s.r[1]: ', styles.rows[1])
-      // let skuKey = "sku" + stylesCounter;
-      styleObj.skus = {"skuKey0": "sku_" + stylesCounter + "_0", "skuKey_1": "sku_" + stylesCounter + "_1"};
-
-      // let photoArgs = styleIdsArr[stylesCounter] // styleId
       // let photoArgs = []; // styleId
-      let photoArgs = [stylesCounter]; // styleId
       // console.log('q: gSs: pArgs: ', photoArgs);g
       // photoArgs.push(styleObj.style_id); // styleId
-      // // console.log('q: gSs: sIdsArr[sC]: ', styleIdsArr[stylesCounter]);
 
-      // let photoPromise = current_query
-      // promiseArr.push(photoPromise)
-
-      // const printASFOP = function(obj, result) {
-      //   // obj.foo = ['foo-foo'];
-      //   obj.foo = result.rows[0];
-      //   console.log('q: printFoo: ', obj);
-      // }
-
-
+      let photoArgs = [stylesCounter]; // styleId
       let photoPromise = pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
       .then(photos => {
         // let photoRows = photos.rows[0]; //get rid of [0]
@@ -243,155 +156,33 @@ const getStyles = (product_id, printASFOP) => {
         styleObj.photos = photos.rows;
         // console.log('q: gSs: p.rows: ', photos.rows); // [ {..}, {..}]
         // console.log('q: gSs: sO.photos: ', styleObj.photos);
-
-      // .then(blah => {
-        //tylesForOneProduct, blah);
-        // printASFOP(blah); console.log('q: pP: blah: ', blah);
-        // printASFOP(allS
       });
       
-      // promiseArr.push(photoPromise);
-
       let skuArgs = [stylesCounter]; // styleId
-
-      let skuPromise = c
+      let skuPromise = pool.query('SELECT * FROM skus where style_id = $1', skuArgs)
       .then(skus => {
-        // let photoRows = photos.rows[0]; //get rid of [0]
-        // styleObj.photos.push(photos.rows);
         styleObj.skus = skus.rows[0];
-        // console.log('q: gSs: p.rows: ', photos.rows); // [ {..}, {..}]
-        // console.log('q: gSs: sO.photos: ', styleObj.photos);
-
-      // .then(blah => {
-        //tylesForOneProduct, blah);
-        // printASFOP(blah); console.log('q: pP: blah: ', blah);
-        // printASFOP(allS
+        promiseArr.push(photoPromise, skuPromise);
       });
-      
-      promiseArr.push(photoPromise, skuPromise);
 
-      // return pool.query('SELECT * FROM photos where style_id = $1', photoArgs)
-      // .then(photos => {
-      //   console.log('q: gSs:: p.q.Photos:', photos.rows);
-      // //   // return photos.rows[0];
-      //   styleObj.photos.push(photos);
-      //   // allStylesForOneProduct.results[stylesCounter - 1].photos.push(photos);
-      //   // allStylesForOneProduct.results[0].photos.push(photos);
-      //   // photosCounter++;
-
-      // //   // return photos.rows;
-      // })
-      // allStylesForOneProduct.results.push(styleObj);
-
+      const allStylesPromise = Promise.all(promiseArr)
+      .then( () => {
+        // console.log('q: gSs: allStylesPromise: aSFOP: ', allStylesForOneProduct);
+        // return 10;
+        return allStylesForOneProduct;
+      }); 
+      console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+      // console.log('q: aSFOP: atEnd', JSON.stringify(allStylesForOneProduct, null, 2))
+      return allStylesPromise;
     }
-
-    // Promise.
-    // const allStylesPromise = Promise.all(promiseArr); // let's refer to it as promise B
-    const allStylesPromise = Promise.all(promiseArr)
-    .then( () => {
-      // console.log('q: gSs: allStylesPromise: aSFOP: ', allStylesForOneProduct);
-      // return 10;
-      return allStylesForOneProduct;
-    }
-      ); 
-    return allStylesPromise;
-
-    // console.log('q: gSs: sIdsArr: NearEnd: ', styleIdsArr)
-    // console.log('query duration to complete call [ms]: ', new Date() - entryTime);
-    // console.log('q: aSFOP: atEnd', JSON.stringify(allStylesForOneProduct, null, 2))
-    // // defer until all for loop promises have completed
-    // // assumes that each cycle on the for loop creates a promise
-    // // 
-    // return allStylesForOneProduct; 
-
   })
   .catch((error) => { console.error('error from DB', error); }) // eslint-disable-line
 };
 
-  // styleIdsArrSorted = styleIdsArr.sort((a,b) => a-b);
-  // console.log('q: gSs: sIdsAr.length: ', styleIdsArr.length);
-  // console.log('q: gSs: UNIQUE sIds: ', styleIdsArrSorted[179]);
-  // console.log('q: gSs: afterLoop: UNIQUE sIdsArrS: ', styleIdsArrSorted);
-  // console.log('q: gSs: aSsFOP: ', allStylesForOneProduct);
-  // console.log('q: gSs: sCInLoop: sIdsArr: ', styleIdsArrSorted);
-  // console.log('q: gSs: s.r.length: ', styles.rows.length);
-
-    
-
-/*        
-  for (let stylesCount = 0; stylesCount < stylesCounter; stylesCount++) {
-
-      // console.log('q: gSs: sCLoop: sC2, sCntr: ', stylesCount2, stylesCounter);
-    // const photosIdsArr = [];
-    // for (let photosCounter = 0; photosCounter < styles.rows[stylesRowsCount].photos.length; photosCounter++) {
-      let photoObj = {
-        thumbnail_url: styles.rows[stylesRowsCount].thumbnail_url,
-        url: styles.rows[stylesRowsCount].url,
-      };
-      if (! styleObj.photos.includes(photoTempObj)) {
-        styleObj.photos.push(photoTempObj);
-        photosCounter++;
-      }
-
-      let skuTempObj = {
-        size: styles.rows[stylesRowsCount].size,
-        quantity: styles.rows[stylesRowsCount].quantity,
-      };
-      if (! styleObj.skus.hasOwnProperty(skuTempObj)) {
-        styleObj.skus = skuTempObj;
-        skusCounter++;
-      }
-
-    };
-*/          
-    // allStylesForOneProduct.results.push(styleObj);
-    //   // console.log('q: gSs O:', styleObj);
-    //   styleObj.photos.push(photoObjs);
-    // }
-
-    // for (let skusKey in styles.rows) { // photoCount = 0; photoCount < styles.rows.length; photoCount++) {
-    //   let skuObj = {
-    //     skusKey: styles.rows[skusKey].value
-    //   }
-    //       // console.log('q: gP fO:', styleObj);
-    //   styleObj.photos.push(photoObjs);
-    // }
-
-    //   for (let photosCounter = 0; photosCounter < styles.rows[stylesRowsCount].photos.length; photosCounter++) {
-    //     let photoTempObj = {
-    //       thumbnail_url: styles.rows[stylesRowsCount].thumbnail_url,
-    //       url: styles.rows[stylesRowsCount].url,
-    //     };
-    //     if (! styleObj.photos.includes(photoTempObj)) {
-    //       styleObj.photos.push(photoTempObj);
-    //       photosCounter++;
-    //     }
-    //   }
-    // }
-    
-        
-      // console.log('q: gP pI:', allStylesForOneProduct);
-        // return allStylesForOneProduct;
-    // console.log('q: gS r.rs:', styles.rows);
-    // return styles.rows[0];
-    // return styles.rows;
-    // console.log('query duration to complete call [ms]: ', new Date() - entryTime);
-
-    // return styleObj;
-    // return allStylesForOneProduct.results[1];
-    // return allStylesForOneProduct.results[179];
-//     return allStylesForOneProduct.results;
-//   })
-//   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
-// };
-
-
-const getStylesOld = (product_id) => {
+const getOnlyStyle = (product_id) => {
   let stylesArgs = [product_id];
-  // console.log('q: gSs: product_id ENTERED', product_id);
-  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id WHERE products.id = $1', stylesArgs
+  // console.log('q: gOS: product_id ENTERED', product_id);
   return pool.query('SELECT * FROM styles where product_id = $1', stylesArgs)
-  // SELECT * FROM products INNER JOIN styles ON products.id = styles.product_id INNER JOIN skus ON styles.id = skus.style_id INNER JOIN photos ON styles.id = photos.style_id  WHERE products.id = $1', stylesValues)
   .then(styles => {
     return styles.rows;
   })
@@ -429,11 +220,12 @@ const getPhotos = (style_id) => {
 
 module.exports = {
   getAllProducts,
+  // getOnlyProduct,
   getProduct,
   getFeatures,
   // getAllStyleInfo,
   getStyles,
-  getStylesOld,
+  getOnlyStyle,
   getSkus,
   getPhotos
 }
