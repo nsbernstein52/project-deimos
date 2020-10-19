@@ -82,7 +82,7 @@ app.get('/products/:id/styles', (request, response) => { // get ONLY style info
   .then((styles) => {
     // console.log('a:: gSs: r.r.[0]: COMPLETED', features);
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
-    console.log(styles);
+    // console.log(styles);
     response.send(styles);
   })
   .catch((error) => { console.error('error from DB', error); }); // eslint-disable-line
@@ -98,12 +98,12 @@ app.get('/products/styles/:id', (request, response) => {
     // console.log('duration to complete call: ', new Date() - entryTime, request.url);
     // console.log(styles);
     for (let i = 0; i < styles.length; i++) {
-      console.log('a: gOSs: loop.i: ', i);
+      // console.log('a: gOSs: loop.i: ', i);
       // getPhotos for a style_id
       styles[i].photos = [];
       app.get('/products/:id/photos', (request, response) => {
         // let entryTime = new Date();
-        console.log('a:gOSs: gPhs: ENTERED');
+        // console.log('a:gOSs: gPhs: ENTERED');
         // pg.getPhotos(request.params.id)
         // let currentStyleId = i;
         // pg.getPhotos(currentStyleId)
@@ -111,7 +111,7 @@ app.get('/products/styles/:id', (request, response) => {
         .then((photos) => {
           // console.log('a:: gPhs: r.rs: COMPLETED', photos);
           // console.log('duration to complete call: ', new Date() - entryTime, request.url);
-          console.log(photos);
+          // console.log(photos);
           response.send(photos);
           // styles[currentStyleId].photos = [photos];
           styles[i].photos = [photos.rows];
@@ -122,7 +122,7 @@ app.get('/products/styles/:id', (request, response) => {
 
       styles[i].skus = {"XS": 8};
     };
-    console.log('end: ', styles);
+    // console.log('end: ', styles);
     // for (let i = 0; i < styles.length; i++) {
     //   // getPhotos for a style_id
     //   app.get('/productsdb/photos/:id', (request, response) => {

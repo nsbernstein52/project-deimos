@@ -124,7 +124,7 @@ const getStyles = (product_id, printASFOP) => {
   let stylesArgs = [product_id];
   return pool.query('SELECT * FROM styles where product_id = $1', stylesArgs)
   .then(styles => {
-    console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length)
+    // console.log('q: gSs: sBeforeLoop, s.r.l: ', styles.rows.length);
     let stylesCounter = 0;
     const promiseArr = [];
 
@@ -172,7 +172,7 @@ const getStyles = (product_id, printASFOP) => {
       let skuArgs = [stylesCounter]; // styleId
       let skuPromise = pool.query('SELECT * FROM skus where style_id = $1', skuArgs)
       .then(skus => {
-        console.log(skus);
+        // console.log(skus);
         let skusObj = {};
         for (skuCounter = 0; skuCounter < skus.rows.length; skuCounter++) {
           let size = skus.rows[skuCounter].size;
@@ -196,7 +196,7 @@ const getStyles = (product_id, printASFOP) => {
       return allStylesForOneProduct;
     }); 
 
-    console.log('query duration to complete call [ms]: ', new Date() - entryTime);
+    // console.log('query duration to complete call [ms]: ', new Date() - entryTime);
     // return allStylesForOneProduct;
     return allStylesPromise;
   })
