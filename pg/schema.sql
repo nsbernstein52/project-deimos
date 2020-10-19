@@ -1,6 +1,10 @@
-DROP DATABASE IF EXISTS productsdb30;
-CREATE DATABASE productsdb30;
-\c productsdb30;
+-- DROP DATABASE IF EXISTS productsdb30;
+-- CREATE DATABASE productsdb30;
+-- \c productsdb30;
+
+DROP DATABASE IF EXISTS productsdb;
+CREATE DATABASE productsdb;
+\c productsdb;
 
 
 
@@ -81,6 +85,12 @@ COPY features FROM '/Users/nsb52/sdc/data30/features-30.csv' HEADER csv;
 COPY styles FROM '/Users/nsb52/sdc/data30/styles-30.csv' HEADER csv;
 COPY skus FROM '/Users/nsb52/sdc/data30/skus-30.csv' HEADER csv;
 COPY photos FROM '/Users/nsb52/sdc/data30/photos-30.csv' HEADER csv;
+
+COPY products FROM '/Users/nsb52/sdc/data-deimos/products.csv' HEADER csv;
+COPY features FROM '/Users/nsb52/sdc/data-deimos/features.csv' HEADER csv;
+COPY styles FROM '/Users/nsb52/sdc/data-deimos/styles.csv' HEADER csv;
+COPY skus FROM '/Users/nsb52/sdc/data-deimos/skus.csv' HEADER csv;
+COPY photos FROM '/Users/nsb52/sdc/data-deimos/photos.csv' HEADER csv;
 
 SELECT * FROM products WHERE id < 5;
 SELECT * FROM features WHERE id < 5;
