@@ -161,7 +161,7 @@ const getStyles = (product_id, printASFOP) => {
           let photoItem = {url, thumbnail_url};
           photosArr.push(photoItem)
         }
-        styleObj.photos = photosArr
+        styleObj.photos = photosArr;
         // styleObj.photos = photos.rows;
         // console.log('q: gSs: sO.photos: ', styleObj.photos);
         // promiseArr.push(photoPromise);
