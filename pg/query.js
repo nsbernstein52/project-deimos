@@ -153,15 +153,15 @@ const getStyles = (product_id, printASFOP) => {
         // styleObj.photos.push(photos.rows);
         // let photoProps = {}
         // console.log('q: gSs: p.rows[sC].url, p.rows[sC].thmbnlUrl: ', photos.rows[stylesCounter].url, photos.rows[stylesCounter].thumbnail_url); // [ {..}, {..}]
-        let photoArr =[];
+        let photosArr = [];
         // let photoItem = {};
         for (photoCounter = 0; photoCounter < photos.rows.length; photoCounter++) {
           let url = photos.rows[photoCounter].url;
           let thumbnail_url = photos.rows[photoCounter].thumbnail_url;
           let photoItem = {url, thumbnail_url};
-          photoArr.push(photoItem)
+          photosArr.push(photoItem)
         }
-        styleObj.photos = photoArr
+        styleObj.photos = photosArr
         // styleObj.photos = photos.rows;
         // console.log('q: gSs: sO.photos: ', styleObj.photos);
         // promiseArr.push(photoPromise);
@@ -172,7 +172,16 @@ const getStyles = (product_id, printASFOP) => {
       let skuArgs = [stylesCounter]; // styleId
       let skuPromise = pool.query('SELECT * FROM skus where style_id = $1', skuArgs)
       .then(skus => {
-        styleObj.skus = skus.rows;
+        console.log(skus);
+        let skusObj = {};
+        for (skuCounter = 0; skuCounter < skus.rows.length; skuCounter++) {
+          let size = skus.rows[skuCounter].size;
+          let quantity = skus.rows[skuCounter].quantity;
+          // console.log('q: gSs: sO.size, sO.qty: ', skusObj.size, skusObj.quantity);
+          skusObj[size] = quantity;
+          // console.log('q: gSs: sO[size]: ', skusObj[size]);
+          styleObj.skus = skusObj;
+        }
       });
       promiseArr.push(skuPromise);
 
